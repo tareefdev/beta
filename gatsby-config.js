@@ -24,6 +24,14 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/config/translations`,
+        name: `translations`,
+      },
+    },
+    `gatsby-transformer-json`,
+    {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
