@@ -1,19 +1,22 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 
 import Bio from "../components/bio"
-import Layout from "../components/layout"
+import { Layout } from "../components/layout"
 import SEO from "../components/seo"
+
+import LocalizedLink from "../components/localizedLink"
+// import useTranslations from "../components/useTranslations"
+
 import { rhythm } from "../utils/typography"
 
-class BlogIndex extends React.Component {
-  render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
-
+const BlogIndex = ({ data, location }) => {
+  const siteTitle = data.site.siteMetadata.title
+  const posts = data.allMarkdownRemark.edges
+  
+//  const { hello } = useTranslations();
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <Layout location={location} title={siteTitle}> 
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
@@ -28,9 +31,9 @@ class BlogIndex extends React.Component {
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
+                <LocalizedLink style={{ boxShadow: `none` }} to={`/${node.fields.slug}`}>
                   {title}
-                </Link>
+                </LocalizedLink>
               </h3>
               <small>{node.frontmatter.date}</small>
               <p
@@ -43,24 +46,27 @@ class BlogIndex extends React.Component {
         })}
       </Layout>
     )
-  }
 }
 
 export default BlogIndex
 
 export const pageQuery = graphql`
-  query {
+  query BlogIndex($locale: String!){
     site {
       siteMetadata {
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(
+       filter: { fields: { locale: { eq: $locale } } }
+       sort: { fields: [frontmatter___date], order: DESC }
+) {
       edges {
         node {
           excerpt
           fields {
             slug
+            locale
           }
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
