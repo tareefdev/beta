@@ -54,7 +54,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     let value = createFilePath({ node, getNode })
     value = `${lang}${value}`
     value = value.includes('_') ? value.slice(0, -4) : value;
-    console.log(value);
     createNodeField({
       name: `slug`,
       node,
@@ -103,9 +102,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
         const slug = post.node.fields.slug
   
-//        console.log(slug);
-
-        const title = post.node.frontmatter.title
+       const title = post.node.frontmatter.title
 
         // Use the fields created in exports.onCreateNode
         const locale = post.node.fields.locale

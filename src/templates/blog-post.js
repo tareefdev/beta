@@ -10,7 +10,6 @@ import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = ({data, location, pageContext}) => {
-  console.log(data);
   const post = data.markdownRemark
   
     const siteTitle = data.site.siteMetadata.title
