@@ -91,10 +91,6 @@ exports.createPages = async ({ graphql, actions }) => {
 
       // Create blog posts pages.
       const posts = result.data.allMarkdownRemark.edges
-      console.log(posts[5])
-      console.log(posts[6])
-      console.log(posts[7])
-
 
       posts.forEach((post, index) => {
         const previous = index === posts.length - 1 ? null : posts[index + 1].node
@@ -102,21 +98,21 @@ exports.createPages = async ({ graphql, actions }) => {
 
         const slug = post.node.fields.slug
 
-        const title = post.frontmatter.title
+        const title = post.node.frontmatter.title
 
         // Use the fields created in exports.onCreateNode
-        const locale = post.fields.locale
-        const isDefault = post.fields.isDefault
+        const locale = post.node.fields.locale
+        const isDefault = post.node.fields.isDefault
 
         createPage({
-        //  path: post.node.fields.slug,
-           path: localizedSlug({ isDefault, locale, slug }),
+          path: post.node.fields.slug,
+       //    path: localizedSlug({ isDefault, locale, slug }),
           component: blogPost,
           context: {
             locale,
             title,
-       //     slug: post.node.fields.slug,
-            slug: localizedSlug({ isDefault, locale, slug }),
+            slug: post.node.fields.slug,
+       //     slug: localizedSlug({ isDefault, locale, slug }),
             previous,
             next,
           },

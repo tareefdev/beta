@@ -9,13 +9,15 @@ import SEO from "../components/seo"
 
 import { rhythm, scale } from "../utils/typography"
 
-const BlogPostTemplate = ({props}) => {
-    const post = props.data.markdownRemark
-    const siteTitle = props.data.site.siteMetadata.title
-    const { previous, next } = props.pageContext
+const BlogPostTemplate = ({data, location, pageContext}) => {
+  console.log(data);
+  const post = data.markdownRemark
+  
+    const siteTitle = data.site.siteMetadata.title
+    const { previous, next } = pageContext
 
     return (
-      <Layout location={props.location} title={siteTitle}>
+      <Layout location={location} title={siteTitle}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
@@ -77,7 +79,7 @@ export const pageQuery = graphql`
         author
       }
     }
-    markdownRemark {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
       html
