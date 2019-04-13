@@ -43,18 +43,23 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
+    
     const name = path.basename(node.fileAbsolutePath, `.md`)
     const defaultKey = findKey(locales, o => o.default === true)
     const isDefault = !(name.slice(-3) === '.de')
     const lang = isDefault ? defaultKey : name.split(`.`)[1]
     createNodeField({ node, name: `locale`, value: lang })
     createNodeField({ node, name: `isDefault`, value: isDefault })
+
+    let value = createFilePath({ node, getNode })
+    value = `${lang}${value}`
+    value = value.includes('.') ? value.slice(0, -4) : value;
+    console.log(value);
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    })
   }
 }
 
@@ -97,6 +102,8 @@ exports.createPages = async ({ graphql, actions }) => {
         const next = index === 0 ? null : posts[index - 1].node
 
         const slug = post.node.fields.slug
+  
+//        console.log(slug);
 
         const title = post.node.frontmatter.title
 
