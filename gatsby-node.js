@@ -46,14 +46,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     
     const name = path.basename(node.fileAbsolutePath, `.md`)
     const defaultKey = findKey(locales, o => o.default === true)
-    const isDefault = !(name.slice(-3) === '.de')
-    const lang = isDefault ? defaultKey : name.split(`.`)[1]
+    const isDefault = !(name.slice(-3) === '_ar')
+    const lang = isDefault ? defaultKey : name.split(`_`)[1]
     createNodeField({ node, name: `locale`, value: lang })
     createNodeField({ node, name: `isDefault`, value: isDefault })
 
     let value = createFilePath({ node, getNode })
     value = `${lang}${value}`
-    value = value.includes('.') ? value.slice(0, -4) : value;
+    value = value.includes('_') ? value.slice(0, -4) : value;
     console.log(value);
     createNodeField({
       name: `slug`,
