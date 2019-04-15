@@ -1,22 +1,22 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
+import React from "react";
+import { Link, graphql } from "gatsby";
 
-import Bio from "../components/bio"
-import { Layout } from "../components/layout"
-import SEO from "../components/seo"
+import Bio from "../components/bio";
+import { Layout } from "../components/layout";
+import SEO from "../components/seo";
 
 // import LocalizedLink from "../components/localizedLink"
-// import useTranslations from "../components/useTranslations"
+import useTranslations from "../components/useTranslations";
 
-import { rhythm } from "../utils/typography"
+import { rhythm } from "../utils/typography";
 
 const BlogIndex = ({ data, location, pageContext }) => {
-  const siteTitle = data.site.siteMetadata.title
-  const posts = data.allMarkdownRemark.edges
-  const { locale } = pageContext
+  const siteTitle = data.site.siteMetadata.title;
+  const posts = data.allMarkdownRemark.edges;
+  const { locale } = pageContext;
 
-  //  const { hello } = useTranslations();
-    return (
+  const { hello } = useTranslations();
+  return (
       <Layout location={location} title={siteTitle} locale={locale}> 
         <SEO
           title="All posts"
@@ -24,7 +24,7 @@ const BlogIndex = ({ data, location, pageContext }) => {
         />
         <Bio />
         {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
+          const title = node.frontmatter.title || node.fields.slug;
           return (
             <div key={node.fields.slug}>
               <h3
@@ -34,6 +34,7 @@ const BlogIndex = ({ data, location, pageContext }) => {
               >
                 <Link style={{ boxShadow: `none` }} to={`/${node.fields.slug}`}>
                   {title}
+                  {hello}
                 </Link>
               </h3>
               <small>{node.frontmatter.date}</small>
@@ -43,13 +44,13 @@ const BlogIndex = ({ data, location, pageContext }) => {
                 }}
               />
             </div>
-          )
+          );
         })}
       </Layout>
-    )
+    );
 }
 
-export default BlogIndex
+export default BlogIndex;
 
 export const pageQuery = graphql`
   query BlogIndex($locale: String!){
@@ -78,4 +79,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
