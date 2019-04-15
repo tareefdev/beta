@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-
+import '../global.css'
 import Bio from "../components/bio"
 import { Layout } from "../components/layout"
 import SEO from "../components/seo"
@@ -12,11 +12,13 @@ import { rhythm, scale } from "../utils/typography"
 const BlogPostTemplate = ({data, location, pageContext}) => {
   const post = data.markdownRemark
   
-    const siteTitle = data.site.siteMetadata.title
-    const { previous, next } = pageContext
+  const siteTitle = data.site.siteMetadata.title
+  const { previous, next } = pageContext
+  const { locale } = pageContext
+  console.log(locale);
 
     return (
-      <Layout location={location} title={siteTitle}>
+      <Layout location={location} title={siteTitle} locale={locale}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
@@ -51,14 +53,14 @@ const BlogPostTemplate = ({data, location, pageContext}) => {
         >
           <li>
             {previous && (
-              <Link to={previous.fields.slug} rel="prev">
+              <Link to={`/${previous.fields.slug}`} rel="prev">
                 ← {previous.frontmatter.title}
               </Link>
             )}
           </li>
           <li>
             {next && (
-              <Link to={next.fields.slug} rel="next">
+              <Link to={`/${next.fields.slug}`} rel="next">
                 {next.frontmatter.title} →
               </Link>
             )}

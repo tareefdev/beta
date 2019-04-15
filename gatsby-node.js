@@ -21,14 +21,17 @@ exports.onCreatePage = ({ page, actions }) => {
     const localizedPath = locales[lang].default
           ? page.path
           : `${locales[lang].path}${page.path}`
+    
+  //  const localizedPath = page.path;
 
     return createPage({
       // Pass on everything from the original page
       ...page,
       // Since page.path returns with a trailing slash (e.g. "/de/")
       // We want to remove that
-      path: removeTrailingSlash(localizedPath),
-      // Pass in the locale as context to every page
+       path: removeTrailingSlash(localizedPath),
+     // path: page.path,
+       // Pass in the locale as context to every page
       // This context also gets passed to the src/components/layout file
       // This should ensure that the locale is available on every page
       context: {

@@ -5,8 +5,9 @@ import { rhythm, scale } from "../utils/typography"
 
 const LocaleContext = React.createContext()
 
-const Layout = ({ location, title, children }) => {
-  const locale = 'en'
+const Layout = ({ location, title, children, locale }) => {
+
+ // const locale = 'en'
     const rootPath = `${__PATH_PREFIX__}/`
     let header
 
@@ -63,7 +64,7 @@ const Layout = ({ location, title, children }) => {
           }}
         >
           <header>{header}</header>
-          <main>{children}</main>
+          <main className={locale}>{children}</main>
           <footer>
             © {new Date().getFullYear()}, Built with
             {` `}

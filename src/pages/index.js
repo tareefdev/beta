@@ -1,22 +1,23 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import Bio from "../components/bio"
 import { Layout } from "../components/layout"
 import SEO from "../components/seo"
 
-import LocalizedLink from "../components/localizedLink"
+// import LocalizedLink from "../components/localizedLink"
 // import useTranslations from "../components/useTranslations"
 
 import { rhythm } from "../utils/typography"
 
-const BlogIndex = ({ data, location }) => {
+const BlogIndex = ({ data, location, pageContext }) => {
   const siteTitle = data.site.siteMetadata.title
   const posts = data.allMarkdownRemark.edges
-  
-//  const { hello } = useTranslations();
+  const { locale } = pageContext
+
+  //  const { hello } = useTranslations();
     return (
-      <Layout location={location} title={siteTitle}> 
+      <Layout location={location} title={siteTitle} locale={locale}> 
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
@@ -31,9 +32,9 @@ const BlogIndex = ({ data, location }) => {
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <LocalizedLink style={{ boxShadow: `none` }} to={`/${node.fields.slug}`}>
+                <Link style={{ boxShadow: `none` }} to={`/${node.fields.slug}`}>
                   {title}
-                </LocalizedLink>
+                </Link>
               </h3>
               <small>{node.frontmatter.date}</small>
               <p
