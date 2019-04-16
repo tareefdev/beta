@@ -5,16 +5,13 @@ import Bio from "../components/bio";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 
-// import LocalizedLink from "../components/localizedLink"
 import useTranslations from "../components/useTranslations";
-
 import { rhythm } from "../utils/typography";
 
 const BlogIndex = ({ data }) => {
   const siteTitle = data.site.siteMetadata.title;
   const posts = data.allMarkdownRemark.edges;
-//  const { locale } = pageContext;
-//  console.log(`here is index page and location is ${location}`);
+
   const { hello } = useTranslations();
   return (
       <Layout title={siteTitle}> 

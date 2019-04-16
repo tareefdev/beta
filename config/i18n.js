@@ -1,5 +1,3 @@
-// Only one item MUST have the "default: true" key
-
 module.exports = {
   en: {
     default: true,

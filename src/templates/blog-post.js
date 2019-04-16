@@ -1,24 +1,19 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
-import '../global.css'
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import React, { useContext } from "react";
+import { Link, graphql } from "gatsby";
+import '../global.css';
+import Bio from "../components/bio";
+import Layout from "../components/layout";
+import SEO from "../components/seo";
 
-// import MdLink from "../components/mdLink"
+import { rhythm, scale } from "../utils/typography";
 
-import { rhythm, scale } from "../utils/typography"
+const BlogPostTemplate = ({ data, pageContext }) => {
+  const post = data.markdownRemark;
+  const siteTitle = data.site.siteMetadata.title;
+  const { previous, next } = pageContext;
 
-const BlogPostTemplate = ({data, location, pageContext}) => {
-  const post = data.markdownRemark
-  
-  const siteTitle = data.site.siteMetadata.title
-  const { previous, next } = pageContext
-  const { locale } = pageContext
-  console.log(locale);
-
-    return (
-      <Layout location={location} title={siteTitle} locale={locale}>
+  return (
+      <Layout title={siteTitle}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
@@ -67,10 +62,10 @@ const BlogPostTemplate = ({data, location, pageContext}) => {
           </li>
         </ul>
       </Layout>
-    )
-}
+    );
+};
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {

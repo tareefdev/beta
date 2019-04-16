@@ -1,20 +1,17 @@
-import React, { useContext } from "react"
-import { Link } from "gatsby"
+import React, { useContext } from "react";
+import { Link } from "gatsby";
 
-import { rhythm, scale } from "../utils/typography"
-
-// const LocaleContext = React.createContext()
-
+import { rhythm, scale } from "../utils/typography";
 import { LocationContext } from '../context/locale-context';
 import { LocaleContext } from '../context/locale-context';
 
 const Layout = ({ title, children }) => {
+  
   const locale = useContext(LocaleContext);
   const location = useContext(LocationContext);
-  console.log(`here is layout component and title is ${title}`);
- // const locale = 'en'
-    const rootPath = `${__PATH_PREFIX__}/`
-    let header
+  
+  const rootPath = `${__PATH_PREFIX__}/`;
+  let header;
 
     if (location.pathname === rootPath) {
       header = (
@@ -36,7 +33,7 @@ const Layout = ({ title, children }) => {
             {title}
           </Link>
         </h1>
-      )
+      );
     } else {
       header = (
         <h3
@@ -56,7 +53,7 @@ const Layout = ({ title, children }) => {
             {title}
           </Link>
         </h3>
-      )
+      );
     }
     return (
         <div
@@ -75,7 +72,7 @@ const Layout = ({ title, children }) => {
             <a href="https://www.gatsbyjs.org">Gatsby</a>
           </footer>
         </div>
-    )
-}
+    );
+};
 
 export default Layout;

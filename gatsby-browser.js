@@ -1,8 +1,5 @@
 // custom typefaces
-import "typeface-montserrat"
-import "typeface-merriweather"
-// import CustomLayout from "./wrapPageElement"
-
-// export const wrapPageElement = CustomLayout
+import "typeface-montserrat";
+import "typeface-merriweather";
 
 export { wrapPageElement } from "./src/context/locale-context";
