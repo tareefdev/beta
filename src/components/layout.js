@@ -1,12 +1,17 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link } from "gatsby"
 
 import { rhythm, scale } from "../utils/typography"
 
-const LocaleContext = React.createContext()
+// const LocaleContext = React.createContext()
 
-const Layout = ({ location, title, children, locale }) => {
+import { LocationContext } from '../context/locale-context';
+import { LocaleContext } from '../context/locale-context';
 
+const Layout = ({ title, children }) => {
+  const locale = useContext(LocaleContext);
+  const location = useContext(LocationContext);
+  console.log(`here is layout component and title is ${title}`);
  // const locale = 'en'
     const rootPath = `${__PATH_PREFIX__}/`
     let header
@@ -54,7 +59,6 @@ const Layout = ({ location, title, children, locale }) => {
       )
     }
     return (
-      <LocaleContext.Provider value={{ locale }}>
         <div
           style={{
             marginLeft: `auto`,
@@ -71,8 +75,7 @@ const Layout = ({ location, title, children, locale }) => {
             <a href="https://www.gatsbyjs.org">Gatsby</a>
           </footer>
         </div>
-      </LocaleContext.Provider>
     )
 }
 
-export { Layout, LocaleContext }
+export default Layout;

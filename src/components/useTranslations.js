@@ -1,10 +1,11 @@
-import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import { LocaleContext } from "./layout"
+import React, { useContext } from "react"
+import { useStaticQuery, graphql } from "gatsby";
+import { LocaleContext } from '../context/locale-context';
 
 function useTranslations() {
   // Grab the locale (passed through context) from the Context Provider
-  const { locale } = React.useContext(LocaleContext)
+  //  const { locale } = React.useContext(LocaleContext)
+  const locale = useContext(LocaleContext);
   // Query the JSON files in <rootDir>/i18n/translations
   const { rawData } = useStaticQuery(query)
 
