@@ -67,9 +67,9 @@ const Layout = ({ title, children }) => {
       }}
     >
       <header>{header}</header>
-      <main>{children}</main>
+      <main className={locale}>{children}</main>
     </div>
-  )
+  );
 };
 
 export default Layout;

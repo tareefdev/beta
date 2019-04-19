@@ -5,14 +5,14 @@ import Layout from "../components/layout";
 import SEO from "../components/seo";
 
 import { rhythm, scale } from "../utils/typography";
+import useTranslations from "../components/useTranslations";
 
-const BlogPostTemplate = ({ data, pageContext }) => {
+const BlogPostTemplate = ({ data }) => {
+  const { title } = useTranslations();
   const post = data.markdownRemark;
-  const siteTitle = data.site.siteMetadata.title;
-  const { previous, next } = pageContext;
 
   return (
-      <Layout title={siteTitle}>
+      <Layout title={title}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
@@ -33,32 +33,7 @@ const BlogPostTemplate = ({ data, pageContext }) => {
           style={{
             marginBottom: rhythm(1),
           }}
-        />
-
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
-          <li>
-            {previous && (
-              <Link to={`/${previous.fields.slug}`} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={`/${next.fields.slug}`} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
+        />        
       </Layout>
     );
 };
@@ -84,4 +59,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

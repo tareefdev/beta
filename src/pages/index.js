@@ -54,7 +54,7 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(
-       filter: { fields: { locale: { eq: $locale } } }
+       filter: { fields: { locale: { eq: $locale } } frontmatter: {level: {lte: 1}} }
        sort: { fields: [frontmatter___date], order: DESC }
 ) {
       edges {
@@ -68,6 +68,7 @@ export const pageQuery = graphql`
             date(formatString: "MMMM DD, YYYY")
             title
             description
+level
           }
         }
       }
