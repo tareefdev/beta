@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 
 import useTranslations from "../components/useTranslations";
+import { LocaleContext } from '../context/locale-context';
 import { rhythm } from "../utils/typography";
 
 const BlogIndex = ({ data }) => {
-  const siteTitle = data.site.siteMetadata.title;
   const posts = data.allMarkdownRemark.edges;
+  const locale = useContext(LocaleContext);
+  console.log(`here your mom and locale is ${locale}`);
   const { title } = useTranslations();
   
   return (
-    <Layout title={title}> 
+    <Layout className={locale} title={title}> 
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}

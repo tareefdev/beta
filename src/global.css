@@ -1,4 +1,4 @@
-.ar p, .ar ul, .ar li, .ar h2 {
+.ar * {
     direction: rtl;
     text-align: right;
 }

@@ -30,7 +30,7 @@ const Layout = ({ title, children }) => {
             textDecoration: `none`,
             color: `inherit`,
           }}
-          to={`/`}
+          to={`${locale === 'ar'? locale : '/'}`}
         >
           {title}
         </Link>
@@ -50,12 +50,12 @@ const Layout = ({ title, children }) => {
             textDecoration: `none`,
             color: `inherit`,
           }}
-          to={`/`}
+          to={`${locale === 'ar'? locale : '/'}`}
         >
           {title}
         </Link>
       </h3>
-    )
+    );
   }
   return (
     <div
