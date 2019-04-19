@@ -30,6 +30,7 @@ const query = graphql`
         node {
           name
           translations: childTranslationsJson {
+title
             hello
             subline
             backToHome

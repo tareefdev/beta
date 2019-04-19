@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Link, graphql } from "gatsby";
 import '../global.css';
-import Bio from "../components/bio";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 
@@ -35,7 +34,6 @@ const BlogPostTemplate = ({ data, pageContext }) => {
             marginBottom: rhythm(1),
           }}
         />
-        <Bio />
 
         <ul
           style={{

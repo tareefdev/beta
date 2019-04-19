@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 
-import Bio from "../components/bio";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 
@@ -11,20 +10,18 @@ import { rhythm } from "../utils/typography";
 const BlogIndex = ({ data }) => {
   const siteTitle = data.site.siteMetadata.title;
   const posts = data.allMarkdownRemark.edges;
-
-  const { hello } = useTranslations();
+  const { title } = useTranslations();
+  
   return (
-      <Layout title={siteTitle}> 
+    <Layout title={title}> 
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
-        <Bio />
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug;
           return (
             <div key={node.fields.slug}>
-              {hello}
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
