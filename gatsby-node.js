@@ -42,7 +42,17 @@ exports.onCreatePage = ({ page, actions }) => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
 
+
   if (node.internal.type === `MarkdownRemark`) {
+
+    // build content of big investigation
+    const filePath= node.fileAbsolutePath;
+    const pathAsArray = filePath.split('/');
+    const isChild = !(pathAsArray[pathAsArray.length - 2] == 'blog');
+    if (isChild) {
+      const parent = pathAsArray[pathAsArray.length - 2];
+      createNodeField({ node, name: `parent`, value: parent });
+    }
     
     const name = path.basename(node.fileAbsolutePath, `.md`);
     const defaultKey = findKey(locales, o => o.default === true);
@@ -50,6 +60,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const lang = isDefault ? defaultKey : name.split(`_`)[1];
     createNodeField({ node, name: `locale`, value: lang });
     createNodeField({ node, name: `isDefault`, value: isDefault });
+    createNodeField({ node, name: `isChild`, value: isChild });
 
     let value = createFilePath({ node, getNode });
     value = `${lang}${value}`;

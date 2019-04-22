@@ -10,6 +10,7 @@ import useTranslations from "../components/useTranslations";
 const BlogPostTemplate = ({ data }) => {
   const { title } = useTranslations();
   const post = data.markdownRemark;
+//  const postLevel = post.frontmatter.level;
 
   return (
       <Layout title={title}>
@@ -54,8 +55,6 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
-        description
       }
     }
   }
