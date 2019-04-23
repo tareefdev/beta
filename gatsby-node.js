@@ -27,7 +27,8 @@ exports.onCreatePage = ({ page, actions }) => {
       ...page,
       // Since page.path returns with a trailing slash (e.g. "/de/")
       // We want to remove that
-       path: removeTrailingSlash(localizedPath),
+//       path: removeTrailingSlash(localizedPath),
+      path: `${locales[lang].path}${page.path}`,
        // Pass in the locale as context to every page
       // This context also gets passed to the src/components/layout file
       // This should ensure that the locale is available on every page
@@ -75,6 +76,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
+  
+  // createRedirect({
+  //   fromPath: `/`,
+  //   toPath: `/en/`,
+  //   redirectInBrowser: true,
+  //   isPermanent: true,
+  // });
+
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
     return graphql(
       `
