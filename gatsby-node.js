@@ -17,18 +17,19 @@ exports.onCreatePage = ({ page, actions }) => {
   // Grab the keys ('en' & 'de') of locales and map over them
   Object.keys(locales).map(lang => {
     // Use the values defined in "locales" to construct the path
-    const localizedPath = locales[lang].default
-          ? page.path
-          : `${locales[lang].path}${page.path}`;
+    // const localizedPath = locales[lang].default
+    //       ? page.path
+    //       : `${locales[lang].path}${page.path}`;
     
+    const localizedPath = page.path === '/'? page.path : `${locales[lang].path}${page.path}`;
+  
 
     return createPage({
       // Pass on everything from the original page
       ...page,
       // Since page.path returns with a trailing slash (e.g. "/de/")
       // We want to remove that
-//       path: removeTrailingSlash(localizedPath),
-      path: `${locales[lang].path}${page.path}`,
+      path: removeTrailingSlash(`${locales[lang].path}${page.path}`),
        // Pass in the locale as context to every page
       // This context also gets passed to the src/components/layout file
       // This should ensure that the locale is available on every page
@@ -42,8 +43,6 @@ exports.onCreatePage = ({ page, actions }) => {
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
-
-
   if (node.internal.type === `MarkdownRemark`) {
 
     // build content of big investigation
@@ -75,14 +74,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 };
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage, createRedirect } = actions;
   
-  // createRedirect({
-  //   fromPath: `/`,
-  //   toPath: `/en/`,
-  //   redirectInBrowser: true,
-  //   isPermanent: true,
-  // });
+  createRedirect({
+    fromPath: `/`,
+    toPath: `/en`,
+    redirectInBrowser: true,
+    isPermanent: true,
+  });
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
     return graphql(
