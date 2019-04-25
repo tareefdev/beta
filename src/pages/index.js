@@ -12,8 +12,12 @@ const Index = () => {
       <Link to={`${locale}/investigations`}>
         Investigations
       </Link>
+      <br/>
+      <Link to={`${locale}/about`}>
+        About
+      </Link>
     </div>
   );
 };
 
-export default  Index;
+export default Index;

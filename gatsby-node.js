@@ -9,30 +9,21 @@ const {
 
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
-
-  // First delete the incoming page that was automatically created by Gatsby
-  // So everything in src/pages/
   deletePage(page);
-
-  // Grab the keys ('en' & 'de') of locales and map over them
-  Object.keys(locales).map(lang => {
-    // Use the values defined in "locales" to construct the path
-    // const localizedPath = locales[lang].default
-    //       ? page.path
-    //       : `${locales[lang].path}${page.path}`;
-    
-    const localizedPath = page.path === '/'? page.path : `${locales[lang].path}${page.path}`;
   
+  Object.keys(locales).map(lang => {
+    const localizedPath = () => {
+      if (locales[lang].default && page.path === '/') {
+        return '/';
+      } else {
+        return `${locales[lang].path}${page.path}`;  
+      }
+    };
+    const test = localizedPath(); 
 
     return createPage({
-      // Pass on everything from the original page
       ...page,
-      // Since page.path returns with a trailing slash (e.g. "/de/")
-      // We want to remove that
-      path: removeTrailingSlash(`${locales[lang].path}${page.path}`),
-       // Pass in the locale as context to every page
-      // This context also gets passed to the src/components/layout file
-      // This should ensure that the locale is available on every page
+      path: test,
       context: {
         locale: lang,
         dateFormat: locales[lang].dateFormat,
@@ -43,9 +34,8 @@ exports.onCreatePage = ({ page, actions }) => {
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
-  if (node.internal.type === `MarkdownRemark`) {
+  if (node.internal.type === "Mdx") {
 
-    // build content of big investigation
     const filePath= node.fileAbsolutePath;
     const pathAsArray = filePath.split('/');
     const isChild = !(pathAsArray[pathAsArray.length - 2] == 'blog');
@@ -64,6 +54,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
     let value = createFilePath({ node, getNode });
     value = `${lang}${value}`;
+    // value = value.includes('_') ? `${value.slice(0, -4)}.html` : `${value.slice(0,-1)}.html`;
     value = value.includes('_') ? value.slice(0, -4) : value;
     createNodeField({
       name: `slug`,
@@ -74,20 +65,13 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 };
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage, createRedirect } = actions;
+  const { createPage } = actions;
   
-  createRedirect({
-    fromPath: `/`,
-    toPath: `/en`,
-    redirectInBrowser: true,
-    isPermanent: true,
-  });
-
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
     return graphql(
       `
       {
-        allMarkdownRemark(
+        allMdx(
           sort: { fields: [frontmatter___date], order: DESC }
           limit: 1000
         ) {
@@ -111,20 +95,14 @@ exports.createPages = async ({ graphql, actions }) => {
         throw result.errors;
       }
 
-      // Create blog posts pages.
-      const posts = result.data.allMarkdownRemark.edges;
+      const posts = result.data.allMdx.edges;
 
       posts.forEach((post, index) => {
         const previous = index === posts.length - 1 ? null : posts[index + 1].node;
         const next = index === 0 ? null : posts[index - 1].node;
-
         const slug = post.node.fields.slug;
-  
         const title = post.node.frontmatter.title;
-
-        // Use the fields created in exports.onCreateNode
         const locale = post.node.fields.locale;
-//        const isDefault = post.node.fields.isDefault;
 
         createPage({
           path: post.node.fields.slug,
@@ -132,7 +110,6 @@ exports.createPages = async ({ graphql, actions }) => {
           context: {
             locale,
             title,
-            //            slug: post.node.fields.slug,
             slug: slug,
             previous,
             next,
@@ -143,4 +120,3 @@ exports.createPages = async ({ graphql, actions }) => {
       return null;
     });
 };
-

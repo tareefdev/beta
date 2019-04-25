@@ -8,7 +8,7 @@ import useTranslations from "../components/useTranslations";
 import { LocaleContext } from '../context/locale-context';
 import { rhythm } from "../utils/typography";
 
-const Investigations = ({ data }) => {
+const Collections = ({ data }) => {
   const posts = data.allMdx.edges;
   const locale = useContext(LocaleContext);
   const { title } = useTranslations();
@@ -44,10 +44,10 @@ const Investigations = ({ data }) => {
     );
 }
 
-export default Investigations;
+export default Collections;
 
 export const pageQuery = graphql`
-  query Investigations($locale: String!){
+  query Collections($locale: String!){
     site {
       siteMetadata {
         title
@@ -55,7 +55,7 @@ export const pageQuery = graphql`
     }
     allMdx(
        filter: { fields: { locale: { eq: $locale } }
-fileAbsolutePath: {regex: "/content\/investigations/"}
+fileAbsolutePath: {regex: "/content\/collections/"}
  frontmatter: {level: {lte: 1}} }
        sort: { fields: [frontmatter___date], order: DESC }
 ) {

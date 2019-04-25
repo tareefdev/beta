@@ -12,29 +12,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/about`,
-        name: `about`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/collections`,
-        name: `collections`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/investigations`,
-        name: `investigations`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/tools_methods`,
-        name: `tools_methods`,
+        path: `${__dirname}/content`,
+        name: `content`,
       },
     },
     {
@@ -53,8 +32,9 @@ module.exports = {
     },
     `gatsby-transformer-json`,
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: `gatsby-mdx`,
       options: {
+        extensions: [".mdx", ".md"],
         plugins: [
           {
             resolve: `gatsby-remark-images`,
@@ -82,7 +62,6 @@ module.exports = {
         //trackingId: `ADD YOUR TRACKING ID HERE`,
       },
     },
-    `gatsby-plugin-feed`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -102,6 +81,6 @@ module.exports = {
       options: {
         pathToConfigModule: `src/utils/typography`,
       },
-    },
+    },    
   ],
 }

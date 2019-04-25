@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link, graphql } from "gatsby";
+import MDXRenderer from "gatsby-mdx/mdx-renderer"
 import '../global.css';
 import Layout from "../components/layout";
 import SEO from "../components/seo";
@@ -9,7 +10,7 @@ import useTranslations from "../components/useTranslations";
 
 const BlogPostTemplate = ({ data }) => {
   const { title } = useTranslations();
-  const post = data.markdownRemark;
+  const post = data.mdx;
 //  const postLevel = post.frontmatter.level;
 
   return (
@@ -29,7 +30,9 @@ const BlogPostTemplate = ({ data }) => {
         >
           {post.frontmatter.date}
         </p>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+        <MDXRenderer>
+          { post.code.body} 
+        </MDXRenderer>
         <hr
           style={{
             marginBottom: rhythm(1),
@@ -49,10 +52,12 @@ export const pageQuery = graphql`
         author
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    mdx(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
-      html
+      code {
+       body     
+      }     
       frontmatter {
         title
       }
