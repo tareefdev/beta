@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 
 import Layout from "../components/layout";
+import LocalizedLink from "../components/localizedLink";
 import SEO from "../components/seo";
 
 import useTranslations from "../components/useTranslations";
@@ -11,6 +12,7 @@ import { rhythm } from "../utils/typography";
 const Investigations = ({ data }) => {
   const posts = data.allMdx.edges;
   const locale = useContext(LocaleContext);
+
   const { title } = useTranslations();
   
   return (
@@ -28,9 +30,9 @@ const Investigations = ({ data }) => {
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={`/${node.fields.slug}`}>
+                <LocalizedLink style={{ boxShadow: `none` }} to={`/${node.fields.slug}`}>
                   {title}
-                </Link>
+                </LocalizedLink>
               </h3>
               <p
                 dangerouslySetInnerHTML={{

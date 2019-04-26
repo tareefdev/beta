@@ -1,21 +1,18 @@
-import React, { useContext } from "react";
-import { Link } from "gatsby";
-
-import { LocaleContext } from '../context/locale-context';
+import React from "react";
+import LocalizedLink from "../components/localizedLink";
 
 const Index = () => {
-  const locale = useContext(LocaleContext);
   return (
     <div>
       INDEX PAGE
       <hr></hr>
-      <Link to={`${locale}/investigations`}>
+      <LocalizedLink to={`investigations`}>
         Investigations
-      </Link>
+      </LocalizedLink>
       <br/>
-      <Link to={`${locale}/about`}>
+      <LocalizedLink to={`about`}>
         About
-      </Link>
+      </LocalizedLink>
     </div>
   );
 };

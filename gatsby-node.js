@@ -53,9 +53,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({ node, name: `isChild`, value: isChild });
 
     let value = createFilePath({ node, getNode });
-    value = `${lang}${value}`;
-    // value = value.includes('_') ? `${value.slice(0, -4)}.html` : `${value.slice(0,-1)}.html`;
-    value = value.includes('_') ? value.slice(0, -4) : value;
+
+//    value = `${lang}${value}`;
+    value = value.includes('_') ? `${value.slice(0, -4)}` : value;
+ //   value = value.includes('_') ? value.slice(0, -4) : value;
+ //   value = value.slice(-5) === 'index' ? value.slice(0,-5) : value;
+     if (value.includes('index') && !(value.includes('html'))) {
+       value = `${value}.html`;
+     }
     createNodeField({
       name: `slug`,
       node,
@@ -103,9 +108,11 @@ exports.createPages = async ({ graphql, actions }) => {
         const slug = post.node.fields.slug;
         const title = post.node.frontmatter.title;
         const locale = post.node.fields.locale;
+        const path = `${locale}${post.node.fields.slug}`;
 
         createPage({
-          path: post.node.fields.slug,
+//          path: post.node.fields.slug,
+          path: path,
           component: blogPost,
           context: {
             locale,
