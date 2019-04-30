@@ -18,4 +18,4 @@ module.exports = {
     defaultTitle: `موقع`,
     defaultDescription: `Gatsby Beispielseite, die MDX und i18n (frei von dependencies) nutzt`,
   },
-}
+};

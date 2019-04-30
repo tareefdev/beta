@@ -3,18 +3,18 @@ import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
+import tr from "../components/useTranslations";
 
-import useTranslations from "../components/useTranslations";
 import { LocaleContext } from '../context/locale-context';
 import { rhythm } from "../utils/typography";
 
 const Collections = ({ data }) => {
   const posts = data.allMdx.edges;
   const locale = useContext(LocaleContext);
-  const { title } = useTranslations();
+  const siteTitle = data.site.siteMetadata.title;
   
   return (
-    <Layout className={locale} title={title}> 
+    <Layout className={locale} title={siteTitle}> 
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
@@ -42,7 +42,7 @@ const Collections = ({ data }) => {
         })}
       </Layout>
     );
-}
+};
 
 export default Collections;
 

@@ -1,20 +1,20 @@
 import React, { useContext } from "react";
 import { Link, graphql } from "gatsby";
-import MDXRenderer from "gatsby-mdx/mdx-renderer"
+import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import '../global.css';
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 
 import { rhythm, scale } from "../utils/typography";
-import useTranslations from "../components/useTranslations";
+import tr from "../components/useTranslations";
 
 const BlogPostTemplate = ({ data }) => {
-  const { title } = useTranslations();
+  const siteTitle = data.site.siteMetadata.title;
   const post = data.mdx;
 //  const postLevel = post.frontmatter.level;
 
   return (
-      <Layout title={title}>
+    <Layout title={siteTitle}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}

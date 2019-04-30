@@ -5,18 +5,17 @@ import Layout from "../components/layout";
 import LocalizedLink from "../components/localizedLink";
 import SEO from "../components/seo";
 
-import useTranslations from "../components/useTranslations";
+import tr from "../components/useTranslations";
 import { LocaleContext } from '../context/locale-context';
 import { rhythm } from "../utils/typography";
 
 const Investigations = ({ data }) => {
   const posts = data.allMdx.edges;
   const locale = useContext(LocaleContext);
-
-  const { title } = useTranslations();
+  const siteTitle = data.site.siteMetadata.title;
   
   return (
-    <Layout className={locale} title={title}> 
+    <Layout className={locale} title={siteTitle}> 
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
@@ -44,7 +43,7 @@ const Investigations = ({ data }) => {
         })}
       </Layout>
     );
-}
+};
 
 export default Investigations;
 
