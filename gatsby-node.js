@@ -20,10 +20,9 @@ exports.onCreatePage = ({ page, actions }) => {
       }
     };
     const test = localizedPath(); 
-
     return createPage({
       ...page,
-      path: test,
+      path: removeTrailingSlash(test),
       context: {
         locale: lang,
         dateFormat: locales[lang].dateFormat,
