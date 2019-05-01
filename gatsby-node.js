@@ -40,7 +40,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const isChild = !(pathAsArray[pathAsArray.length - 2] == 'blog');
     if (isChild) {
       const parent = pathAsArray[pathAsArray.length - 2];
-      createNodeField({ node, name: `parent`, value: parent });
+      createNodeField({ node, name: `parentDir`, value: parent });
     }
     
     const name = path.basename(node.fileAbsolutePath, `.md`);
