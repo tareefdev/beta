@@ -1,11 +1,10 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
-    author: `Kyle Mathews`,
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    title: `Syrian Archive`,
+    description: `Curating visual documentation for justice and human rights`,
+    siteUrl: `https://syrianarchive.org`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `syrian_archive`,
     },
   },
   plugins: [
@@ -76,6 +75,7 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {

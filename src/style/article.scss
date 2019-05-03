@@ -1,0 +1,21 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 0.9rem;
+}
+
+td:nth-child(1) { background: hsl(0, 0%, 68%); }
+td:nth-child(2) { background: hsl(0, 0%, 70%); }
+td:nth-child(3) { background: hsl(0, 0%, 70%); }
+td:nth-child(4) { background: hsl(0, 0%, 70%); }
+td:nth-child(5) { background: hsl(0, 0%, 80%); }
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

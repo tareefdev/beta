@@ -6,6 +6,8 @@ import { LocationContext } from '../context/locale-context';
 import { LocaleContext } from '../context/locale-context';
 //import useTranslations from "../components/useTranslations";
 
+import style from '../style/main.scss';
+
 const Layout = ({ title, children }) => {
   
   const locale = useContext(LocaleContext);
