@@ -14,6 +14,10 @@ const Index = () => {
       <LocalizedLink to={`about`}>
         {tr('About')}
       </LocalizedLink>
+      <br/>
+      <LocalizedLink to={`tools-methods`}>
+        {tr('Tools and Methods')}
+      </LocalizedLink>
     </div>
   );
 };

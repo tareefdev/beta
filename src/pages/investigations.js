@@ -56,8 +56,8 @@ export const pageQuery = graphql`
     }
     allMdx(
        filter: { fields: { locale: { eq: $locale } }
-fileAbsolutePath: {regex: "/content\/investigations/"}
- frontmatter: {level: {lte: 1}} }
+       fileAbsolutePath: {regex: "/content\/investigations/"}
+       frontmatter: {level: {lte: 1}} }
        sort: { fields: [frontmatter___date], order: DESC }
 ) {
       edges {

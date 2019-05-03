@@ -12,18 +12,18 @@ exports.onCreatePage = ({ page, actions }) => {
   deletePage(page);
   
   Object.keys(locales).map(lang => {
-    const localizedPath = () => {
+    const localizedPath = (function(){
       if (locales[lang].default && page.path === '/') {
         return '/';
       } else {
         return `${locales[lang].path}${page.path}`;  
       }
-    };
-    const test = localizedPath(); 
+    })();
     return createPage({
       ...page,
-      path: removeTrailingSlash(test),
+      path: removeTrailingSlash(localizedPath),
       context: {
+        ...page.context,
         locale: lang,
         dateFormat: locales[lang].dateFormat,
       },
@@ -37,11 +37,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
     const filePath= node.fileAbsolutePath;
     const pathAsArray = filePath.split('/');
-    const isChild = !(pathAsArray[pathAsArray.length - 2] == 'blog');
-    if (isChild) {
-      const parent = pathAsArray[pathAsArray.length - 2];
-      createNodeField({ node, name: `parentDir`, value: parent });
-    }
+//    const isChild = !(pathAsArray[pathAsArray.length - 2] == 'blog');
+//    if (isChild) {
+    const parent = pathAsArray[pathAsArray.length - 2];
+    createNodeField({ node, name: `parentDir`, value: parent });
+//    }
     
     const name = path.basename(node.fileAbsolutePath, `.md`);
     const defaultKey = findKey(locales, o => o.default === true);
@@ -49,14 +49,10 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const lang = isDefault ? defaultKey : name.split(`_`)[1];
     createNodeField({ node, name: `locale`, value: lang });
     createNodeField({ node, name: `isDefault`, value: isDefault });
-    createNodeField({ node, name: `isChild`, value: isChild });
+//    createNodeField({ node, name: `isChild`, value: isChild });
 
     let value = createFilePath({ node, getNode });
-
-//    value = `${lang}${value}`;
     value = value.includes('_') ? `${value.slice(0, -4)}` : value;
- //   value = value.includes('_') ? value.slice(0, -4) : value;
- //   value = value.slice(-5) === 'index' ? value.slice(0,-5) : value;
      if (value.includes('index') && !(value.includes('html'))) {
        value = `${value}.html`;
      }
@@ -69,8 +65,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 };
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
-  
+  const { createPage } = actions;  
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
     return graphql(
       `
@@ -85,6 +80,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 slug
                 locale
                 isDefault
+                parentDir
               }
               frontmatter {
                 title
@@ -100,29 +96,29 @@ exports.createPages = async ({ graphql, actions }) => {
       }
 
       const posts = result.data.allMdx.edges;
-
+      
       posts.forEach((post, index) => {
         const previous = index === posts.length - 1 ? null : posts[index + 1].node;
         const next = index === 0 ? null : posts[index - 1].node;
         const slug = post.node.fields.slug;
         const title = post.node.frontmatter.title;
         const locale = post.node.fields.locale;
+        const parentDir = post.node.fields.parentDir;
         const path = `${locale}${post.node.fields.slug}`;
 
         createPage({
-//          path: post.node.fields.slug,
           path: path,
           component: blogPost,
           context: {
             locale,
             title,
             slug: slug,
+            parentDir,
             previous,
             next,
           },
         });
       });
-
       return null;
     });
 };
