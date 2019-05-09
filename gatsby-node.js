@@ -122,3 +122,14 @@ exports.createPages = async ({ graphql, actions }) => {
       return null;
     });
 };
+
+
+// Adding this, so Gatsby-mdx could import js components from src
+// Issue number #176 on github
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    },
+  });
+};
