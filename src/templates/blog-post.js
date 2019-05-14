@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link, graphql } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 
-import '../global.css';
+import '../global.scss';
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 import ChildList from "../components/childList";

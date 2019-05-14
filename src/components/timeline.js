@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 import moment from 'moment';
 import axios from 'axios';
+import tr from './useTranslations';
 
 let units = [];
 let data = [];
@@ -25,6 +26,9 @@ class Timeline extends Component {
     const node = this.node;
     const pop = this.pop;
     const collectionName = this.props.collectionName;
+    const lang = this.props.lang || 'en';
+    const isEnglish = lang == 'en';
+    
     units = _.filter(units, u => _.includes(u.clusters.collections,collectionName));
     units = _.filter(units, u => u.annotations.incident_date !== undefined);
     // setting up the data in this.props.units to the chart.
@@ -63,14 +67,15 @@ class Timeline extends Component {
       dates.push(d);
     }
 
-    const margin = {top: 5, right: 0, bottom: 30, left: 20};
-//    const width = Math.floor(document.body.clientWidth);
-    //    const height = 200 - margin.top - margin.bottom;
-    const width = this.props.width;
-    const height = this.props.height;
+    const margin = {top: 5, right: 20, bottom: 30, left: 20};
+    const width = this.props.width - margin.right - margin.left;
+    const height = this.props.height - margin.top - margin.bottom;
 
-    const x = d3.scaleTime()
-          .range([0, width]);
+    // const x = d3.scaleTime()
+    //       .range([0, width]);
+    
+    const x = d3.scaleTime();
+    isEnglish ? x.range([0, width]): x.range([width,0 ]);
 
     const y = d3.scaleLinear()
           .range([height, 0]);
@@ -82,7 +87,7 @@ class Timeline extends Component {
 
     const xAxis = d3.axisBottom(x).ticks(d3.timeYear.every(1)).tickFormat(d3.timeFormat('%Y'));
 
-    const yAxis = d3.axisLeft(y).ticks(4);
+    const yAxis = isEnglish ? d3.axisLeft(y).ticks(4) : d3.axisRight(y).ticks(4);
     
     const chart = d3.select(node)
           .attr('width', width + margin.left + margin.right)
@@ -102,8 +107,8 @@ class Timeline extends Component {
       .select('.domain');
 
 
-    g.append('g')
-      .call(yAxis)
+    const t = isEnglish ? g.append('g') : g.append('g').attr("transform",'translate(' + width + ', 0)') ;
+      t.call(yAxis)
       .append('text')
       .attr('transform', 'rotate(-90)')
       .attr('y', 6)
