@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 import moment from 'moment';
 import axios from 'axios';
-import tr from './useTranslations';
+// import tr from './useTranslations';
 
 let units = [];
 let data = [];
