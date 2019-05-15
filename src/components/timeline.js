@@ -3,28 +3,29 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 import moment from 'moment';
 import axios from 'axios';
-// import tr from './useTranslations';
 
-let units = [];
-let data = [];
+
 
 class Timeline extends Component {
   constructor(props){
     super(props);
     this.drawChart = this.drawChart.bind(this);
+    this.units = [];
+    this.data = [];
   }
   
   componentDidMount() {
-    const req = axios.get('https://api.syrianarchive.org/incidents/')
+    axios.get('https://api.syrianarchive.org/incidents/')
       .then(response => {
-        units = [...response.data.units];
+        this.units = [...response.data.units];
         this.drawChart();
       });
   }
 
   drawChart () {
     const node = this.node;
-    const pop = this.pop;
+    let units = this.units;
+    let data = this.data;
     const collectionName = this.props.collectionName;
     const lang = this.props.lang || 'en';
     const isEnglish = lang == 'en';
@@ -71,9 +72,6 @@ class Timeline extends Component {
     const width = this.props.width - margin.right - margin.left;
     const height = this.props.height - margin.top - margin.bottom;
 
-    // const x = d3.scaleTime()
-    //       .range([0, width]);
-    
     const x = d3.scaleTime();
     isEnglish ? x.range([0, width]): x.range([width,0 ]);
 
@@ -122,7 +120,7 @@ class Timeline extends Component {
       .attr('stroke-linecap', 'round')
       .attr('stroke-width', 3)
       .attr('d', line(newData));
-  };
+  }
   render() {
     return <div>
              <div ref={pop => this.pop = pop}></div>

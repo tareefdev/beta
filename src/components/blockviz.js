@@ -13,11 +13,7 @@ class BlockViz extends Component {
   }
 
   drawViz() {
-
     let data = [];
-    let value = 5000;
-    let colorScale;
-    
     const no = this.node;
     let numbers = this.props.numbers;
     let colors =  this.props.colors;
@@ -40,8 +36,6 @@ class BlockViz extends Component {
     let nodes = []; // map to track the colour of nodes
 
     // function to create new colours for the picking
-
-    let nextCol = 1;
 
     for (let i = 0; i < num; i++) {
       data.push({value: color});
@@ -93,21 +87,21 @@ class BlockViz extends Component {
           .append('custom')
           .attr('class', 'rect')
           .attr('x', function(d, i) {
-	    let x0 = Math.floor(i / 100) % 10, x1 = Math.floor(i % 10);
-	    return groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
+            let x0 = Math.floor(i / 100) % 10, x1 = Math.floor(i % 10);
+            return groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
           })
           .attr('y', function(d, i) {
-	    let y0 = Math.floor(i / 1000), y1 = Math.floor(i % 100 / 10);
-	    return groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
+            let y0 = Math.floor(i / 1000), y1 = Math.floor(i % 100 / 10);
+            return groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
           })
           .attr('width', 0)
           .attr('height', 0);
 
-      let exitSel = join.exit()
-          .transition()
-          .attr('width', 0)
-          .attr('height', 0)
-          .remove();
+      join.exit()
+        .transition()
+        .attr('width', 0)
+        .attr('height', 0)
+        .remove();
 
       return join
         .merge(enterSel)
@@ -116,7 +110,7 @@ class BlockViz extends Component {
         .attr('height', cellSize)
         .attr('fillStyle', function(d) {
           return d.value;
-        })
+        });
 
     } // databind()
 
@@ -137,7 +131,7 @@ class BlockViz extends Component {
 
       let elements = custom.selectAll('custom.rect'); // this is the same as the join letiable, but used here to draw
 
-      elements.each(function(d,i) { // for each virtual/custom element...
+      elements.each(function(d) { // for each virtual/custom element...
 
         let node = d3.select(this);
 
