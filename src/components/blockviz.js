@@ -154,8 +154,8 @@ class BlockViz extends Component {
   }
   render() {
     return <div>
-         <canvas ref={node => this.node = node}></canvas>
-       </div>;
+             <canvas ref={node => this.node = node}></canvas>
+           </div>;
   }
 }
 
