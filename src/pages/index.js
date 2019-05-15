@@ -1,29 +1,29 @@
-import React from "react";
-import LocalizedLink from "../components/localizedLink";
-import tr from "../components/useTranslations";
+import React from 'react';
+import LocalizedLink from '../components/localizedLink';
+import tr from '../components/useTranslations';
 
 const Index = () => {
   return (
     <div>
       INDEX PAGE
       <hr></hr>
-      <LocalizedLink to={`investigations`}>
+      <LocalizedLink to={'investigations'}>
         {tr('Investigations')}
       </LocalizedLink>
       <br/>
-      <LocalizedLink to={`about`}>
+      <LocalizedLink to={'about'}>
         {tr('About')}
       </LocalizedLink>
       <br/>
-      <LocalizedLink to={`tools-methods`}>
+      <LocalizedLink to={'tools-methods'}>
         {tr('Tools and Methods')}
       </LocalizedLink>
       <br/>
-      <LocalizedLink to={`collections`}>
+      <LocalizedLink to={'collections'}>
         {tr('Collections')}
       </LocalizedLink>
       <br/>
-      <LocalizedLink to={`tech-advocacy`}>
+      <LocalizedLink to={'tech-advocacy'}>
         {tr('Tech Advocacy')}
       </LocalizedLink>
     </div>

@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
-import { Link, graphql } from "gatsby";
+import React, { useContext } from 'react';
+import LocalizedLink from '../components/localizedLink';
+import { graphql } from 'gatsby';
 
-import Layout from "../components/layout";
-import SEO from "../components/seo";
-import tr from "../components/useTranslations";
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import tr from '../components/useTranslations';
 
 import { LocaleContext } from '../context/locale-context';
-import { rhythm } from "../utils/typography";
+import { rhythm } from '../utils/typography';
 
 const Collections = ({ data }) => {
   const posts = data.allMdx.edges;
@@ -16,8 +17,8 @@ const Collections = ({ data }) => {
   return (
     <Layout className={locale} title={siteTitle}> 
         <SEO
-          title="All posts"
-          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
+          title='All posts'
+          keywords={['blog', 'gatsby', 'javascript', 'react']}
         />
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug;
@@ -28,9 +29,9 @@ const Collections = ({ data }) => {
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={`/${node.fields.slug}`}>
+                <LocalizedLink style={{ boxShadow: 'none' }} to={`/${node.fields.slug}`}>
                   {title}
-                </Link>
+                </LocalizedLink>
               </h3>
               <p
                 dangerouslySetInnerHTML={{
