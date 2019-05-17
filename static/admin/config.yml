@@ -1,13 +1,15 @@
 backend:
-  name: github
-  repo: tareefdev/beta-content #replace with your username/repo
+  name: gitlab
+  repo: tareefdev/content
+  auth_type: implicit
+  app_id: 8dde5fa547310e1a1c8ba8d0905ca513a49059e00eaea4488554a7ed1074c1f4
 
-media_folder: static/assets
+media_folder: assets
 
 collections:
   - name: content
-    label: Blog
-    folder: "content/investigations"
+    label: Content
+    folder: investigations
     create: true
     fields:
       - { name: path, label: Path }
