@@ -9,7 +9,7 @@ media_folder: assets
 collections:
   - name: content
     label: Content
-    folder: investigations
+    folder: content/investigations
     create: true
     fields:
       - { name: path, label: Path }
