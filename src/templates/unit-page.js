@@ -11,6 +11,8 @@ class PostTemplate extends React.Component {
   //   }),
   // }
   render() {
+    // here you can use this.props.pageContext.locale
+    console.log(this.props.pageContext.locale);
     let isModal = false;
     // We don't want to show the modal if a user navigates
     // directly to a post so if this code is running on Gatsby's
