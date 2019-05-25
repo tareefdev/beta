@@ -1,4 +1,5 @@
 const path = require(`path`);
+const _ = require(`lodash`);
 const locales = require(`./config/i18n`);
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
@@ -67,6 +68,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;  
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
+  const unitTemplate = path.resolve(`src/templates/unit-page.js`);
     return graphql(
       `
       {
@@ -88,6 +90,22 @@ exports.createPages = async ({ graphql, actions }) => {
             }
           }
         }
+       
+        allUnitsJson {
+  	edges {
+         node {
+           id
+           aid
+          incident_code
+          annotations {
+          upload_date
+          online_title_en
+          location
+          online_link       
+          }
+         }
+        }
+       }
       }
     `
     ).then(result => {
@@ -95,7 +113,18 @@ exports.createPages = async ({ graphql, actions }) => {
         throw result.errors;
       }
 
-      const posts = result.data.allMdx.edges;
+      const posts = result.data.allMdx.edges;      
+      const units = result.data.allUnitsJson.edges;
+      
+      units.forEach((unit, edge) => {
+        createPage({
+          path: `${unit.node.id}`,
+          component: unitTemplate,
+          context: {
+            id: unit.node.id,
+          },
+        });
+      });
       
       posts.forEach((post, index) => {
         const previous = index === posts.length - 1 ? null : posts[index + 1].node;

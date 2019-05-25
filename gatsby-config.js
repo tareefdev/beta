@@ -29,6 +29,13 @@ module.exports = {
         name: `translations`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/data`,
+        name: `data`,
+      },
+    },
     `gatsby-transformer-json`,
     {
       resolve: `gatsby-mdx`,

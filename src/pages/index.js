@@ -23,6 +23,10 @@ const Index = () => {
         {tr('Collections')}
       </LocalizedLink>
       <br/>
+      <LocalizedLink to={'database'}>
+        {tr('Database')}
+      </LocalizedLink>
+      <br/>
       <LocalizedLink to={'tech-advocacy'}>
         {tr('Tech Advocacy')}
       </LocalizedLink>
