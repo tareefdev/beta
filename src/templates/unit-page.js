@@ -12,7 +12,7 @@ class PostTemplate extends React.Component {
   // }
   render() {
     // here you can use this.props.pageContext.locale
-    console.log(this.props.pageContext.locale);
+    const locale = this.props.pageContext.locale;
     let isModal = false;
     // We don't want to show the modal if a user navigates
     // directly to a post so if this code is running on Gatsby's
@@ -26,7 +26,7 @@ class PostTemplate extends React.Component {
     }
     return (
       <DataBaseLayout location={this.props.location} isModal={isModal}>
-        <UnitDetails unit={this.props.data.unitsJson} />
+        <UnitDetails unit={this.props.data.unitsJson} locale={locale} />
       </DataBaseLayout>
     );
   }
@@ -34,23 +34,11 @@ class PostTemplate extends React.Component {
 
 export default PostTemplate;
 
-// The post template's GraphQL query. Notice the “id”
-// variable which is passed in. We set this on the page
-// context in gatsby-node.js.
-//
-// All GraphQL queries in Gatsby are run at build-time and
-// loaded as plain JSON files so have minimal client cost.
 export const pageQuery = graphql`
   query($id: String!) {
     unitsJson(id: { eq: $id }) {
      id
-     clusters {
-      locations 
-     }
-     incident_code
-     annotations {
-      upload_date
-     }
+     ...UnitDetails_detail
     }
   }
 `;

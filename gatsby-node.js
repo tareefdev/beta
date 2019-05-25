@@ -95,14 +95,6 @@ exports.createPages = async ({ graphql, actions }) => {
   	edges {
          node {
            id
-           aid
-          incident_code
-          annotations {
-          upload_date
-          online_title_en
-          location
-          online_link       
-          }
          }
         }
        }

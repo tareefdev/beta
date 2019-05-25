@@ -6,8 +6,13 @@
 }
 
 .unit {
+    margin: 1.2rem;
   span {
     background-color: #e1e1e1;
     margin-right: 0.5rem;
+  }
+
+  p {
+    margin-bottom: unset;
   }
 }

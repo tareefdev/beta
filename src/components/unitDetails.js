@@ -13,38 +13,38 @@ class UnitDetails extends React.Component {
       clusters,
     } = this.props.unit;
 
+    const locale = this.props.locale;
+
     const UintDetail = () => (
-      <div
-        css={{
-          ...scale(-2 / 5),
-          lineHeight: typography.options.baseLineHeight,
-        }}
-      >
-        <div
-          css={{
-            marginBottom: rhythm(1),
-            overflow: `hidden`,
-          }}
-        >
-          <strong
-            data-testid="post-detail-likes"
-            css={{
-              float: `left`,
-            }}
-          >
-            {incident_code} likes
+      <div>
+        <div>
+          <strong>
+            {incident_code}
+            <br/>
           </strong>
-          <strong
-            css={{
-              color: `rgba(0,0,0,0.4)`,
-              float: `right`,
-            }}
-          >
-            {annotations.upload_date}
-          </strong>
+          {annotations.incident_date}
         </div>
-        <div data-testid="post-detail-text">
-          <strong>{annotations.sa_link}</strong> 
+        <br/>
+        <div>
+          <strong>Online Title:</strong><br/>
+          {annotations[`online_title_${locale}`]}
+        </div>
+        <br/>
+        <div>
+          <strong>Location:</strong><br/>
+          {clusters["locations"]}
+        </div>
+        <br/>
+        <div>
+          <a href={annotations["online_link"]}>
+            Online Link
+          </a>         
+        </div>
+        <div>
+          <video controls width="500">
+            <source src={annotations["filename"]} type="video/mp4">
+            </source>
+          </video>
         </div>
       </div>
     );
@@ -82,7 +82,6 @@ class UnitDetails extends React.Component {
               },
             }}
           >
-            <UintDetail />
           </div>
         </div>
         <div
@@ -136,13 +135,20 @@ class UnitDetails extends React.Component {
 
 export default UnitDetails;
 
-export const postDetailFragment = graphql`
+export const unitDetailFragment = graphql`
   fragment UnitDetails_detail on UnitsJson {
-    # Specify the fields from the post we need.
+   incident_code
+   clusters {
+     locations
+}
     annotations {
-      incident_code
+     filename
+     online_link
+     incident_date
       upload_date
       sa_link
+      online_title_en
+      online_title_ar
      }
 
   }

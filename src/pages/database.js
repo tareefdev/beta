@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql } from "gatsby";
 import style from "../../src/global.scss";
+import LocalizedLink from "../components/localizedLink";
 
 class ObservationDatabase extends Component {
   constructor(props){
@@ -25,7 +26,7 @@ class ObservationDatabase extends Component {
                                   <span>{unit["incident_code"]}</span>
 <span>{unit["annotations"]["upload_date"]}</span>
                                   <p>{unit["annotations"]["online_title_en"]}</p>
-<a></a>
+                                  <LocalizedLink to={`/database/units/${unit.id}`}>View</LocalizedLink>
                                 </div>
                                       );
     

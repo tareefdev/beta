@@ -1,6 +1,5 @@
 import * as PropTypes from "prop-types";
 import React from "react";
-import { FaCamera } from "react-icons/fa";
 import { Link, PageRenderer } from "gatsby";
 
 // Load the css for the Space Mono font.
@@ -83,13 +82,6 @@ class DataBaseLayout extends React.Component {
                   overflow: `hidden`,
                 }}
               >
-                <FaCamera
-                  css={{
-                    top: -4,
-                    display: `inline-block`,
-                    position: `relative`,
-                  }}
-                />
                 <span
                   css={{
                     paddingLeft: `calc(${rhythm(1)} - 1px)`,
@@ -98,22 +90,9 @@ class DataBaseLayout extends React.Component {
                     marginLeft: rhythm(1),
                   }}
                 >
-                  Gatsbygram
+                  Syrian Archive
                 </span>
               </h1>
-            </Link>
-            <Link
-              data-testid="about-link"
-              to="/about/"
-              css={{
-                color: `inherit`,
-                display: `inline-block`,
-                float: `right`,
-                lineHeight: `35px`,
-                textDecoration: `none`,
-              }}
-            >
-              About
             </Link>
           </div>
         </div>
