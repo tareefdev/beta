@@ -122,8 +122,9 @@ exports.createPages = async ({ graphql, actions }) => {
       });
       });
 
-      const unitsPerPage = 50;
-      const numPages = Math.ceil(posts.length / unitsPerPage);
+      const unitsPerPage = 10;
+      const numPages = Math.ceil(units.length / unitsPerPage);
+      console.log(numPages);
 
       Object.keys(locales).map(lang => {
         Array.from({ length: numPages }).forEach((_, i) => {

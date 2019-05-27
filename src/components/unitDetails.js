@@ -43,7 +43,7 @@ class UnitDetails extends React.Component {
         </div>
         <div>
           <video controls width="500">
-            <source src={annotations["filename"]} type="video/mp4">
+            <source src={annotations["sa_link"]} type="video/mp4">
             </source>
           </video>
         </div>
