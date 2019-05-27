@@ -69,6 +69,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;  
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
   const unitTemplate = path.resolve(`src/templates/unit-page.js`);
+  const unitListTemplate = path.resolve(`src/templates/units-list.js`);
     return graphql(
       `
       {
@@ -119,6 +120,24 @@ exports.createPages = async ({ graphql, actions }) => {
           },
         });
       });
+      });
+
+      const unitsPerPage = 50;
+      const numPages = Math.ceil(posts.length / unitsPerPage);
+
+      Object.keys(locales).map(lang => {
+        Array.from({ length: numPages }).forEach((_, i) => {
+          createPage({
+            path: i === 0 ? `${lang}/database` : `${lang}/database/${i + 1}`,
+            component: unitListTemplate,
+            context: {
+              limit: unitsPerPage,
+              skip: i * unitsPerPage,
+              numPages,
+              currentPage: i + 1
+            },
+          });
+        });
       });
       
       posts.forEach((post, index) => {

@@ -5,7 +5,7 @@ import { LocaleContext } from '../context/locale-context';
 import tr from '../components/useTranslations';
 import style from "../../src/global.scss";
 
-const ObservationDatabase = ({data}) => {
+const UnitsList = ({data}) => {
   const locale = useContext(LocaleContext);
   const  units  = data.allUnitsJson.edges.map(u => u.node);
 
@@ -29,11 +29,14 @@ const ObservationDatabase = ({data}) => {
 
 };
 
-export default ObservationDatabase;
+export default UnitsList;
 
 export const pageQuery = graphql`
-  query {
- allUnitsJson {
+  query unitsPageQuery($skip: Int!, $limit: Int!){
+ allUnitsJson(
+      limit: $limit
+      skip: $skip
+) {
     edges {
      node {
         id
