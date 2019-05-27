@@ -4,10 +4,17 @@ import LocalizedLink from "../components/localizedLink";
 import { LocaleContext } from '../context/locale-context';
 import tr from '../components/useTranslations';
 import style from "../../src/global.scss";
+import { rhythm } from "../utils/typography";
 
-const UnitsList = ({data}) => {
+const UnitsList = ({data, pageContext}) => {
   const locale = useContext(LocaleContext);
-  const  units  = data.allUnitsJson.edges.map(u => u.node);
+  const units = data.allUnitsJson.edges.map(u => u.node);
+  const { currentPage, numPages } = pageContext;
+  const isFirst = currentPage === 1;
+  const isLast = currentPage === numPages;
+  const prevPage = currentPage - 1 === 1 ? '/' : (currentPage - 1).toString();
+  const nextPage = (currentPage + 1).toString();
+
 
   const listItems = units.map((unit) =>
                               <div
@@ -24,6 +31,42 @@ const UnitsList = ({data}) => {
   return(
     <div>
       {listItems}
+      <ul>
+        <li>{!isFirst && (
+          <LocalizedLink to={`/database/${prevPage}`} rel="prev">
+            ← Previous Page
+          </LocalizedLink>
+        )}</li>
+
+        {Array.from({ length: numPages }, (_, i) => (
+          <li
+            key={`pagination-number${i + 1}`}
+            style={{
+              margin: 0,
+            }}
+          >
+            <LocalizedLink
+              to={`/database/${i === 0 ? '' : i + 1}`}
+              style={{
+                padding: rhythm(1 / 4),
+                textDecoration: 'none',
+                color: i + 1 === currentPage ? '#ffffff' : '',
+                background: i + 1 === currentPage ? '#007acc' : '',
+              }}
+            >
+              {i + 1}
+            </LocalizedLink>
+          </li>
+        ))}
+        
+        <li>
+          {!isLast && (
+            <LocalizedLink to={`/database/${nextPage}`} rel="next">
+              Next Page →
+            </LocalizedLink>
+          )}
+        </li>
+      </ul>
     </div>
   );
 
