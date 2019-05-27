@@ -1,40 +1,33 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { graphql } from "gatsby";
-import style from "../../src/global.scss";
 import LocalizedLink from "../components/localizedLink";
+import { LocaleContext } from '../context/locale-context';
+import tr from '../components/useTranslations';
+import style from "../../src/global.scss";
 
-class ObservationDatabase extends Component {
-  constructor(props){
-    super(props);
-//    this.buildDatabase = this.buildDatabase.bind(this);
-  }
+const ObservationDatabase = ({data}) => {
+  const locale = useContext(LocaleContext);
+  const  units  = data.allUnitsJson.edges.map(u => u.node);
 
-  componentDidMount() {
-
-  }
-
+  const listItems = units.map((unit) =>
+                              <div
+                                key={unit["id"]}
+                                className="unit"
+                              >
+                                <span>{unit["incident_code"]}</span>
+                                <span>{unit["annotations"]["upload_date"]}</span>
+                                <p>{unit["annotations"][`online_title_${locale}`]}</p>
+                                <LocalizedLink to={`/database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
+                              </div>
+                             );
   
-  render() {
-    let { allUnitsJson } = this.props.data;
-    const units = allUnitsJson.edges.map(u => u.node); 
-    console.log(units[1]);
-    const listItems = units.map((unit) =>
-                                <div
-                                  key={unit["id"]}
-                                  className="unit"
-                                >
-                                  <span>{unit["incident_code"]}</span>
-<span>{unit["annotations"]["upload_date"]}</span>
-                                  <p>{unit["annotations"]["online_title_en"]}</p>
-                                  <LocalizedLink to={`/database/units/${unit.id}`}>View</LocalizedLink>
-                                </div>
-                                      );
-    
-    return <div>
-             {listItems}
-           </div>;
-  }
-}
+  return(
+    <div>
+      {listItems}
+    </div>
+  );
+
+};
 
 export default ObservationDatabase;
 
@@ -49,6 +42,7 @@ export const pageQuery = graphql`
         annotations {
           upload_date
           online_title_en
+          online_title_ar
           location
           online_link
         }
