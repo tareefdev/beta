@@ -20,10 +20,13 @@
         "sourceType": "module"
     },
     "plugins": [
-        "import",
-        "react"
+      "import",
+      "react",
+      "react-hooks"
     ],
-    "rules": {
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
         "linebreak-style": [
             "error",
             "unix"
