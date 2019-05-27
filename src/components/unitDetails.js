@@ -3,6 +3,7 @@ import React from "react";
 import presets from "../utils/presets";
 import typography, { rhythm, scale } from "../utils/typography";
 import { graphql } from "gatsby";
+import tr from "../components/useTranslations";
 
 class UnitDetails extends React.Component {
   render() {
@@ -26,18 +27,18 @@ class UnitDetails extends React.Component {
         </div>
         <br/>
         <div>
-          <strong>Online Title:</strong><br/>
+          <strong>{tr('Online Title')}:</strong><br/>
           {annotations[`online_title_${locale}`]}
         </div>
         <br/>
         <div>
-          <strong>Location:</strong><br/>
+          <strong>{tr('Location')}:</strong><br/>
           {clusters["locations"]}
         </div>
         <br/>
         <div>
           <a href={annotations["online_link"]}>
-            Online Link
+            {tr('Online Link')}
           </a>         
         </div>
         <div>
