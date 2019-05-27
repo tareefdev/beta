@@ -21,7 +21,7 @@ const UnitsList = ({data, pageContext}) => {
                                 key={unit["id"]}
                                 className="unit"
                               >
-                                <span>{unit["incident_code"]}</span>
+                                <span>{unit["reference_code"]}</span>
                                 <span>{unit["annotations"]["upload_date"]}</span>
                                 <p>{unit["annotations"][`online_title_${locale}`]}</p>
                                 <LocalizedLink to={`/database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
@@ -84,6 +84,7 @@ export const pageQuery = graphql`
      node {
         id
         aid
+       reference_code
        incident_code
         annotations {
           upload_date
