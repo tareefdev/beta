@@ -1,5 +1,5 @@
 const path = require(`path`);
-const _ = require(`lodash`);
+//const _ = require(`lodash`);
 const locales = require(`./config/i18n`);
 const { createFilePath } = require(`gatsby-source-filesystem`);
 

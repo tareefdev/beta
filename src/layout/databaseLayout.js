@@ -1,5 +1,5 @@
-import * as PropTypes from "prop-types";
 import React from "react";
+import * as PropTypes from "prop-types";
 import { Link, PageRenderer } from "gatsby";
 
 // Load the css for the Space Mono font.

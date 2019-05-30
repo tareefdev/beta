@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import d3 from '../utils/d3Importer';
-import {merge} from "lodash";
-import {each} from "lodash";
+import {merge, each} from "lodash";
 const ChRemovedVidoes = require('./data/ChRemovedVidoes');
 
 class RemovedVideos extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import d3 from '../utils/d3Importer';
-import merge from "lodash";
+import {merge} from "lodash";
 
 class BlockViz extends Component {
   constructor(props){
