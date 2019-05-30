@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import * as d3 from 'd3';
-import _ from 'lodash/fp';
+import d3 from '../utils/d3Importer';
+import {merge} from "lodash";
+import {each} from "lodash";
 const ChRemovedVidoes = require('./data/ChRemovedVidoes');
 
 class RemovedVideos extends Component {
@@ -35,7 +36,7 @@ class RemovedVideos extends Component {
 
     // === Load and prepare the data === //
 
-    _.each(i => data.push({
+    each(i => data.push({
       value: removed.includes(i)
 	? i.includes('CW_')
 	? '#999'
@@ -130,7 +131,7 @@ class RemovedVideos extends Component {
 
 	let node = d3.select(this);
 
-	nodes.push(_.merge(d, {
+	nodes.push(merge(d, {
           x: node.attr('x'),
           y: node.attr('y'),
           w: node.attr('width'),

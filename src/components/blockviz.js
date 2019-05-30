@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import * as d3 from 'd3';
-import _ from 'lodash';
+import d3 from '../utils/d3Importer';
+import merge from "lodash";
 
 class BlockViz extends Component {
   constructor(props){
@@ -135,7 +135,7 @@ class BlockViz extends Component {
 
         let node = d3.select(this);
 
-        nodes.push(_.merge(d, {
+        nodes.push(merge(d, {
           x: node.attr('x'),
           y: node.attr('y'),
           w: node.attr('width'),

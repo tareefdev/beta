@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import * as d3 from 'd3';
-import _ from 'lodash';
+import d3 from '../utils/d3Importer';
+import {filter, includes, groupBy, find} from 'lodash';
 import moment from 'moment';
 import axios from 'axios';
-
-
 
 class Timeline extends Component {
   constructor(props){
@@ -30,8 +28,8 @@ class Timeline extends Component {
     const lang = this.props.lang || 'en';
     const isEnglish = lang == 'en';
     
-    units = _.filter(units, u => _.includes(u.clusters.collections,collectionName));
-    units = _.filter(units, u => u.annotations.incident_date !== undefined);
+    units = filter(units, u => includes(u.clusters.collections,collectionName));
+    units = filter(units, u => u.annotations.incident_date !== undefined);
     // setting up the data in this.props.units to the chart.
     units.forEach((d) => {
       const formatedDate = moment(d.annotations.incident_date).format('YYYY-MM-DD');
@@ -42,7 +40,7 @@ class Timeline extends Component {
       }
     });
 
-    units = _.groupBy(units, (value) =>
+    units = groupBy(units, (value) =>
                       value.annotations.incident_date
                      );
 
@@ -97,7 +95,7 @@ class Timeline extends Component {
     x.domain(d3.extent(data, (d) => d.date));
     y.domain([0, d3.max(data, (d) => d.counts)]);
 
-    const newData = dates.map((d) => _.find(data, {date: d}) || {date: d, counts: 0});
+    const newData = dates.map((d) => find(data, {date: d}) || {date: d, counts: 0});
 
     g.append('g')
       .attr('transform', 'translate(0,' + height + ')') // eslint-disable-line
