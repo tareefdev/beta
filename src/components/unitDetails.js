@@ -9,7 +9,6 @@ class UnitDetails extends React.Component {
   render() {
     const {
       id,
-      incident_code,
       annotations,
       clusters,
     } = this.props.unit;
@@ -20,7 +19,7 @@ class UnitDetails extends React.Component {
       <div>
         <div>
           <strong>
-            {incident_code}
+            {annotations["incident_code"]}
             <br/>
           </strong>
           {annotations.incident_date}
@@ -138,11 +137,11 @@ export default UnitDetails;
 
 export const unitDetailFragment = graphql`
   fragment UnitDetails_detail on UnitsJson {
-   incident_code
    clusters {
      locations
 }
     annotations {
+     incident_code
      filename
      online_link
      incident_date
