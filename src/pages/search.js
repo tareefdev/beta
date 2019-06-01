@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import FlexSearch from 'flexsearch';
 import { graphql } from 'gatsby';
-import LocalizedLink from "../components/localizedLink";
 import { LocaleContext } from '../context/locale-context';
 
 
@@ -9,32 +8,38 @@ const Search = ({data}) => {
   const units = data.allUnitsJson.edges.map(u => u.node);
   
   const locale = useContext(LocaleContext);
-  const [query, setQuery] = useState('');
+  const [queryTitle, setQueryTitle] = useState('');
+  const [queryCollections, setQuerycollections] = useState('');
   const [results, setResults] = useState('');
 
-  const index = locale === 'en' ? FlexSearch.create() : FlexSearch.create({
+  const index = new FlexSearch({
+    depth: 3,
     split: /\s+/,
-    rtl: true
+    doc: {
+      id: "id",
+      field: [
+        `annotations:online_title_${locale}`,
+        "clusters:locations",
+      ]
+    }
   });
-  
-  for(let i = 0; i < units.length; i++){
-    index.add(units[i]["id"], units[i]["annotations"][`online_title_${locale}`]);
-  }
 
+  index.add(units);
+  
   const ResultList = () => {
     if (results.length > 0) {
       return results.map((unit, i) => (
         <div className="item-search" key={i}>
-          <LocalizedLink to={`/database/units/${unit["id"]}`} className="link">
+          <a href={`/${locale}/database/units/${unit["id"]}`} className="link" target="_blank">
             <h4>{unit["annotations"][`online_title_${locale}`]}</h4>
-          </LocalizedLink>
+          </a>
         </div>
       ));
-    } else if (query.length > 2) {
-      return 'No results for ' + query;
+    } else if (queryTitle.length > 2) {
+      return 'No results for ' + queryTitle;
     } else if (
       results.length === 0 &&
-        query.length > 0
+        queryTitle.length > 0
     ) {
       return 'Please insert at least 3 characters';
     } else {
@@ -42,38 +47,56 @@ const Search = ({data}) => {
     }
   };
 
-  function search (event) {
-    const quer = event.target.value;
-    if (query.length > 2) {
-      const results = getSearchResults(quer);
-      setQuery(quer);
+  function search () {
+    if (queryTitle.length > 2) {
+      const results = getSearchResults();
       setResults(results);
     } else {
-      setQuery(quer);
+      setQueryTitle(queryTitle);
       setResults([]);
     }
   }
 
-  function getSearchResults(query) {
-    if (!query || !index) {
+  function getSearchResults() {
+    if (!queryTitle || !index) {
       return [];
     } else {
       setResults([]);
-      setResults(index.search(query));
-      const uintsResult = index.search(query);
-      const nodes = units.filter(node => (uintsResult.includes(node["id"]) ? node : null));
-      return nodes;
+      const unitsResult = index.search([{
+        field: `annotations:online_title_${locale}`,
+        query: queryTitle,
+        bool: "and"
+      },{
+        field: "clusters:locations",
+        query: queryCollections,
+        bool: "or"
+      }]);
+      console.log(unitsResult.length);
+      setResults(unitsResult);
+      return unitsResult;
     }
   }
-  
+
   return(
     <div>
+      Title:
       <input
         className="search__input"
         type="text"
-        onChange={search}
+        onBlur={e => setQueryTitle(e.target.value)}
         placeholder={'Search'}
       />
+      <br/>
+      Collection:
+      <input
+        className="collection__input"
+        type="text"
+        onBlur={e => setQuerycollections(e.target.value)}
+        placeholder={'Collections'}
+      />
+      <button onClick={search}>
+        Search
+      </button>
       <div>
         <ResultList />
       </div>
@@ -92,6 +115,10 @@ export const pageQuery = graphql`
         annotations {
           online_title_en
           online_title_ar
+        }
+        clusters {
+          collections
+          locations
         }
       }
     }
