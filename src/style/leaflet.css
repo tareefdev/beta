@@ -1,5 +1,9 @@
 /* required styles */
 
+.beb {
+  height: 700px;
+}
+
 .leaflet-pane,
 .leaflet-tile,
 .leaflet-marker-icon,

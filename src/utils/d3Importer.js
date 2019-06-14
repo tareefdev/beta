@@ -5,6 +5,7 @@ import { scaleTime, scaleLinear } from "d3-scale";
 import { line, curveStepAfter } from "d3-shape";
 import { axisBottom, axisLeft, axisRight } from 'd3-axis';
 import { extent, max } from "d3-array";
+import { transition } from 'd3-transition';
 
 export default {
   line: line,
@@ -20,5 +21,6 @@ export default {
   timeParse: timeParse,
   curveStepAfter: curveStepAfter,
   extent: extent,
-  max: max
+  max: max,
+  transition:transition
 };
