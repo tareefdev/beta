@@ -4,72 +4,80 @@ import { Link } from "gatsby";
 import { rhythm, scale } from "../utils/typography";
 import { LocationContext } from '../context/locale-context';
 import { LocaleContext } from '../context/locale-context';
-//import useTranslations from "../components/useTranslations";
+import LocalizedLink from '../components/localizedLink';
+import tr from '../components/useTranslations';
 
-import style from '../style/main.scss';
+import '../style/main.scss';
 
-const Layout = ({ title, children }) => {
+const Layout = ({ children }) => {
   
   const locale = useContext(LocaleContext);
   const location = useContext(LocationContext);
-  //  const { title } = useTranslations();
   
   const rootPath = `${__PATH_PREFIX__}/`;
-  let header;
+  const header = (
+    <div className="site-header">
+      <div className="logo">
+        <LocalizedLink to={''}>SYRIAN ARCHIVE</LocalizedLink>
+      </div>
+      <nav className="header-menu">
+          <ul>
+            <li>
+              <LocalizedLink to={'investigations'}>
+                {tr('Investigations')}
+              </LocalizedLink>
+            </li>
+            <li>
+              <LocalizedLink to={'collections'}>
+                {tr('Collections')}
+              </LocalizedLink>
+            </li>            
+            <li>
+              <LocalizedLink to={'database'}>
+                {tr('Database')}
+              </LocalizedLink>
+            </li>
+            <li>
+              <LocalizedLink to={'tech-advocacy'}>
+                {tr('Tech Advocacy')}
+              </LocalizedLink>
+            </li>            
+            <li>
+              <LocalizedLink to={'tools-methods'}>
+                {tr('Tools and Methods')}
+              </LocalizedLink>
+            </li>
+            <li>
+              <LocalizedLink to={'about'}>
+                {tr('About')}
+              </LocalizedLink>
+            </li>
+          </ul>
+      </nav>
+      <div className="social-buttons">
+        <ul>
+          <li><a>T</a></li>
+          <li><a>F</a></li>
+          <li><a>A</a></li>
+          <li><a>Donate</a></li>
+        </ul>
+      </div>
+    </div>
+  );
 
-  if (location.pathname === rootPath) {
-    header = (
-      <h1
-        style={{
-          ...scale(1.5),
-          marginBottom: rhythm(1.5),
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            textDecoration: `none`,
-            color: `inherit`,
-          }}
-          to={`${locale === 'ar'? locale : '/'}`}
-        >
-          {title}
-        </Link>
-      </h1>
-    )
-  } else {
-    header = (
-      <h3
-        style={{
-          fontFamily: `Montserrat, sans-serif`,
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            textDecoration: `none`,
-            color: `inherit`,
-          }}
-          to={`${locale === 'ar'? locale : '/'}`}
-        >
-          {title}
-        </Link>
-      </h3>
-    );
-  }
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: rhythm(28),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
+    <div>
       <header>{header}</header>
-      <main className={locale}>{children}</main>
+      <main
+        className={locale}
+        style={{
+          marginLeft: `auto`,
+          marginRight: `auto`,
+          maxWidth: rhythm(42),
+          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
+        }}
+      >
+        {children}</main>
     </div>
   );
 };

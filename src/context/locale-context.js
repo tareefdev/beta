@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Layout from '../components/layout';
 const locales = require(`../../config/i18n`);
 
 const languages = Object.keys(locales);
@@ -21,7 +20,7 @@ const wrapPageElement = ({ element, props }) => {
   return (
     <LocationContext.Provider value={props.location}>
       <LocaleContext.Provider value={contextValue}>
-        <Layout>{element}</Layout>
+        {element}
       </LocaleContext.Provider>
     </LocationContext.Provider>
   );

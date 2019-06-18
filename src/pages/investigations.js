@@ -12,10 +12,9 @@ import { rhythm } from "../utils/typography";
 const Investigations = ({ data }) => {
   const posts = data.allMdx.edges;
   const locale = useContext(LocaleContext);
-  const siteTitle = data.site.siteMetadata.title;
   
   return (
-    <Layout className={locale} title={siteTitle}> 
+    <Layout className={locale}> 
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}

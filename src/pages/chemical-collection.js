@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 import LocalizedLink from "../components/localizedLink";
 import { LocaleContext } from '../context/locale-context';
 import tr from '../components/useTranslations';
-import style from "../global.scss";
+
 import { rhythm } from "../utils/typography";
 
 const UnitsList = ({data}) => {

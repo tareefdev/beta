@@ -1,0 +1,19 @@
+.site-header {
+  width: 90%;
+  margin: 1rem auto;
+  display: grid;
+  grid-template-columns: 15% 70%  15%;
+  ul {
+    list-style-type: none;
+  }
+  
+  .header-menu ul {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .social-buttons ul {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

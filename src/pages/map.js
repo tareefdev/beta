@@ -24,7 +24,7 @@ export default class MyMap extends Component {
     const position = [this.default_viewport.lat, this.default_viewport.lng];
     const { data } = this.props;
     const units = data.allUnitsJson.edges.map(u => u.node);
-    
+
     if (typeof window !== 'undefined') {
       return (
         <Map center={position} zoom={this.default_viewport.zoom} className="beb">
@@ -32,21 +32,21 @@ export default class MyMap extends Component {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {units.map((unit, index) => {
+          {units.map((unit) => {
             return (
               <Marker
-                key={index}
+                key={unit.aid}
                 position={{lat: unit.annotations.latitude, lng: unit.annotations.longitude}}
               >
                 <Popup>
                   <span>
-                    {unit.incident_code}
+                    {unit.annotations['incident_code']}
                   </span>
                 </Popup>
                 <Circle
                   center={{lat: unit.annotations.latitude, lng: unit.annotations.longitude}}
                   fillColor="blue"
-                  radius={200}
+                  radius={1400}
                 />
               </Marker>
             );

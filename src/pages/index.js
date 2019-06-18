@@ -1,10 +1,11 @@
 import React from 'react';
+import Layout from '../components/layout';
 import LocalizedLink from '../components/localizedLink';
 import tr from '../components/useTranslations';
 
 const Index = () => {
   return (
-    <div>
+    <Layout>
       INDEX PAGE
       <hr></hr>
       <LocalizedLink to={'investigations'}>
@@ -30,7 +31,7 @@ const Index = () => {
       <LocalizedLink to={'tech-advocacy'}>
         {tr('Tech Advocacy')}
       </LocalizedLink>
-    </div>
+    </Layout>
   );
 };
 
