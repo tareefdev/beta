@@ -1,21 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { graphql } from "gatsby";
-import LocalizedLink from "../components/localizedLink";
+
 import { LocaleContext } from '../context/locale-context';
+import LocalizedLink from "../components/localizedLink";
 import tr from '../components/useTranslations';
-import { rhythm } from "../utils/typography";
+import Find from '../components/find';
 
 const UnitsList = ({data, pageContext}) => {
+  const [Units, setUnits] = useState('');
+
+  // Similar to componentDidMount, componentDidUpdate:
+  useEffect(() => {
+    setUnits(listUnits);
+  },[listUnits]);
+
+  function cleanUnits() {
+    setUnits([]);
+  }
+  
   const locale = useContext(LocaleContext);
   const units = data.allUnitsJson.edges.map(u => u.node);
-  const { currentPage, numPages } = pageContext;
+
+  // helper
+  const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1}, (_, i) => start + (i * step));
+
+  // Calculates info about current page
+  const { currentPage, totalPages } = pageContext;
   const isFirst = currentPage === 1;
-  const isLast = currentPage === numPages;
+  const isLast = currentPage === totalPages;
   const prevPage = currentPage - 1 === 1 ? '/' : (currentPage - 1).toString();
   const nextPage = (currentPage + 1).toString();
+  const startPage = isFirst ? 1 : currentPage - 5;
+  const stopPage = isLast ? currentPage : currentPage + 5; 
+  const pageRange = range(startPage, stopPage, 1);
+  
+  // we don't want pages less than 0 or more than the exist ones
+  const pageNavigation = pageRange.filter(page => (page > -1 && page < totalPages));
 
-
-  const listItems = units.map((unit) =>
+  
+   const listUnits = units.map((unit) =>
                               <div
                                 key={unit["id"]}
                                 className="unit"
@@ -25,47 +48,39 @@ const UnitsList = ({data, pageContext}) => {
                                 <p>{unit["annotations"][`online_title_${locale}`]}</p>
                                 <LocalizedLink to={`/database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
                               </div>
-                             );
+                           );
+ 
   
   return(
-    <div>
-      {listItems}
-      <ul>
-        <li>{!isFirst && (
-          <LocalizedLink to={`/database/${prevPage}`} rel="prev">
-            ← Previous Page
-          </LocalizedLink>
-        )}</li>
-
-        {Array.from({ length: numPages }, (_, i) => (
-          <li
-            key={`pagination-number${i + 1}`}
-            style={{
-              margin: 0,
-            }}
-          >
-            <LocalizedLink
-              to={`/database/${i === 0 ? '' : i + 1}`}
-              style={{
-                padding: rhythm(1 / 4),
-                textDecoration: 'none',
-                color: i + 1 === currentPage ? '#ffffff' : '',
-                background: i + 1 === currentPage ? '#007acc' : '',
-              }}
+    <div className="database-page">
+      <div className="database">
+        <div className="database-search">
+         <Find/>
+        </div>
+        <div className="database-table">
+          {Units}
+        </div>
+      </div>
+      <div className="page-numbers">
+        <ul>
+          {pageNavigation.map(v => (
+            <li
+              key={`pagination-number${v}`}
             >
-              {i + 1}
-            </LocalizedLink>
-          </li>
-        ))}
-        
-        <li>
-          {!isLast && (
-            <LocalizedLink to={`/database/${nextPage}`} rel="next">
-              Next Page →
-            </LocalizedLink>
-          )}
-        </li>
-      </ul>
+              <LocalizedLink
+                to={`/database/${v === 0 ? '' : v + 1}`}
+                style={{
+                  textDecoration: 'none',
+                  color: v + 1 === currentPage ? '#ffffff' : '',
+                  background: v + 1 === currentPage ? '#007acc' : '',
+                }}
+              >
+                {v + 1}
+              </LocalizedLink>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 

@@ -1,10 +1,29 @@
 import React, { useContext, useState } from 'react';
 import FlexSearch from 'flexsearch';
-import { graphql } from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
 import { LocaleContext } from '../context/locale-context';
 
-
-const Search = ({data}) => {
+const Find = () => {
+  const data = useStaticQuery(graphql`
+  query FindUnits {
+   allUnitsJson {
+    edges {
+     node {
+        id
+        annotations {
+          online_title_en
+          online_title_ar
+        }
+        clusters {
+          collections
+          locations
+        }
+      }
+    }
+  }
+  }
+`);
+  
   const units = data.allUnitsJson.edges.map(u => u.node);
   
   const locale = useContext(LocaleContext);
@@ -30,7 +49,7 @@ const Search = ({data}) => {
     if (results.length > 0) {
       return results.map((unit, i) => (
         <div className="item-search" key={i}>
-          <a href={`/${locale}/database/units/${unit["id"]}`} className="link" target="_blank">
+          <a href={`/${locale}/database/units/${unit["id"]}`} className="link" rel="noopener noreferrer" target="_blank">
             <h4>{unit["annotations"][`online_title_${locale}`]}</h4>
           </a>
         </div>
@@ -103,24 +122,6 @@ const Search = ({data}) => {
   );
 };
 
-export default Search;
+export default Find;
 
-export const pageQuery = graphql`
-  query Units {
-   allUnitsJson {
-    edges {
-     node {
-        id
-        annotations {
-          online_title_en
-          online_title_ar
-        }
-        clusters {
-          collections
-          locations
-        }
-      }
-    }
-  }
-  }
-`;
+

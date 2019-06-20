@@ -123,18 +123,17 @@ exports.createPages = async ({ graphql, actions }) => {
       });
 
       const unitsPerPage = 150;
-      const numPages = Math.ceil(units.length / unitsPerPage);
-      console.log(numPages);
+      const totalPages = Math.ceil(units.length / unitsPerPage);
 
       Object.keys(locales).map(lang => {
-        Array.from({ length: numPages }).forEach((_, i) => {
+        Array.from({ length: totalPages }).forEach((_, i) => {
           createPage({
             path: i === 0 ? `${lang}/database` : `${lang}/database/${i + 1}`,
             component: unitListTemplate,
             context: {
               limit: unitsPerPage,
               skip: i * unitsPerPage,
-              numPages,
+              totalPages,
               currentPage: i + 1
             },
           });

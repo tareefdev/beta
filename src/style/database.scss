@@ -1,0 +1,16 @@
+.database-page {
+
+  .page-numbers ul {
+    display: flex;
+    li {
+      list-style: none;    
+      padding: 0.43rem;
+    }
+  }
+
+  .database {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+} 
+
