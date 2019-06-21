@@ -20,6 +20,7 @@ const Search = ({data}) => {
       id: "id",
       field: [
         `annotations:online_title_${locale}`,
+        `annotations:incident_date_time`
       ]
     }
   });
@@ -68,10 +69,6 @@ const Search = ({data}) => {
         bool: "and"
       },{
         field: "annotations:incident_date_time",
-        query: queryCollections,
-        bool: "or"
-      },{
-        field: "annotations:location_info:location",
         query: queryCollections,
         bool: "or"
       }]);
