@@ -3,6 +3,7 @@ import FlexSearch from 'flexsearch';
 import { graphql } from 'gatsby';
 import { LocaleContext } from '../context/locale-context';
 
+import Layout from '../components/layout';
 
 const Search = ({data}) => {
   const units = data.allUnitsJson.edges.map(u => u.node);
@@ -19,7 +20,6 @@ const Search = ({data}) => {
       id: "id",
       field: [
         `annotations:online_title_${locale}`,
-        "clusters:locations",
       ]
     }
   });
@@ -30,7 +30,7 @@ const Search = ({data}) => {
     if (results.length > 0) {
       return results.map((unit, i) => (
         <div className="item-search" key={i}>
-          <a href={`/${locale}/database/units/${unit["id"]}`} className="link" target="_blank">
+          <a href={`/${locale}/database/units/${unit["id"]}`} className="link" rel="noopener noreferrer" target="_blank">
             <h4>{unit["annotations"][`online_title_${locale}`]}</h4>
           </a>
         </div>
@@ -67,7 +67,11 @@ const Search = ({data}) => {
         query: queryTitle,
         bool: "and"
       },{
-        field: "clusters:locations",
+        field: "annotations:incident_date_time",
+        query: queryCollections,
+        bool: "or"
+      },{
+        field: "annotations:location_info:location",
         query: queryCollections,
         bool: "or"
       }]);
@@ -77,29 +81,41 @@ const Search = ({data}) => {
   }
 
   return(
-    <div>
-      Title:
-      <input
-        className="search__input"
-        type="text"
-        onBlur={e => setQueryTitle(e.target.value)}
-        placeholder={'Search'}
-      />
-      <br/>
-      Collection:
-      <input
-        className="collection__input"
-        type="text"
-        onBlur={e => setQuerycollections(e.target.value)}
-        placeholder={'Collections'}
-      />
-      <button onClick={search}>
-        Search
-      </button>
-      <div>
-        <ResultList />
+    <Layout className={locale}>
+      <div className="database">
+        <div className="search-forum">
+          <div className="filter">
+            <span>Title:</span>
+            <input
+              className="search__input"
+              type="text"
+              onBlur={e => setQueryTitle(e.target.value)}
+              placeholder={'Search'}
+            />
+          </div>
+          <div className="filter">
+            <span>Collection:</span>
+            <input
+              className="collection__input"
+              type="text"
+              onBlur={e => setQuerycollections(e.target.value)}
+              placeholder={'Collections'}
+            />
+          </div>
+          <div className="filter">
+            <span>Before Date</span>            
+          </div>
+          <div className="filter">
+            <button onClick={search}>
+              Search
+            </button>
+          </div>
+        </div>
+        <div className="search-results">
+          <ResultList />
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
@@ -114,10 +130,10 @@ export const pageQuery = graphql`
         annotations {
           online_title_en
           online_title_ar
-        }
-        clusters {
-          collections
-          locations
+          incident_date_time
+          location_info {
+           location
+          }
         }
       }
     }

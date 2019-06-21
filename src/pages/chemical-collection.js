@@ -15,8 +15,7 @@ const UnitsList = ({data}) => {
                                 key={unit["id"]}
                                 className="unit"
                               >
-                                <span>{unit["annotations"]["reference_code"]}</span>
-                                <span>{unit["annotations"]["upload_date"]}</span>
+                                <span>{unit["annotations"]["incident_date_time"]}</span>
                                 <p>{unit["annotations"][`online_title_${locale}`]}</p>
                                 <LocalizedLink to={`/database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
                               </div>
@@ -34,26 +33,16 @@ export default UnitsList;
 
 export const pageQuery = graphql`
   query chemicalCollectionQuery{
- allUnitsJson( 
-   filter: {
-    clusters: {
-      collections: {eq: "Chemical weapons"}
-    }
-  }
-  ) {
+ allUnitsJson {
     edges {
      node {
         id
-        aid
         annotations {
-          incident_code
-          reference_code
-          upload_date
+          incident_date_time
           online_title_en
           online_title_ar
-          location
-          online_link
         }
+          online_link
       }
     }
   }

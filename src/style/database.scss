@@ -1,16 +1,29 @@
-.database-page {
+.database {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 
-  .page-numbers ul {
-    display: flex;
-    li {
-      list-style: none;    
-      padding: 0.43rem;
+  .search-forum {
+    margin-top: 3.5rem ;
+    
+    span {
+      display: block;
+    }
+    
+    .filter {
+      margin: 1rem auto;
+    }
+    .filter:first-child {
+      margin: 0 auto;
     }
   }
 
-  .database {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+
+  .search-results {
+    .item-search {
+      h4 {
+	text-transform: none;
+      }
+    }
   }
 } 
 

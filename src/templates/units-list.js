@@ -4,7 +4,6 @@ import { graphql } from "gatsby";
 import { LocaleContext } from '../context/locale-context';
 import LocalizedLink from "../components/localizedLink";
 import tr from '../components/useTranslations';
-import Find from '../components/find';
 
 const UnitsList = ({data, pageContext}) => {
   const [Units, setUnits] = useState('');
@@ -54,9 +53,6 @@ const UnitsList = ({data, pageContext}) => {
   return(
     <div className="database-page">
       <div className="database">
-        <div className="database-search">
-         <Find/>
-        </div>
         <div className="database-table">
           {Units}
         </div>
@@ -97,16 +93,11 @@ export const pageQuery = graphql`
     edges {
      node {
         id
-        aid
         annotations {
-          incident_code
-          reference_code
-          upload_date
           online_title_en
           online_title_ar
-          location
-          online_link
         }
+          online_link
       }
     }
   }
