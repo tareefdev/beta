@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import d3 from '../utils/d3Importer';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import {filter, includes, groupBy, find} from 'lodash';
 import moment from 'moment';
 import axios from 'axios';
