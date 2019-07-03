@@ -42,9 +42,9 @@ const UnitsList = ({data, pageContext}) => {
                                 key={unit["id"]}
                                 className="unit"
                               >
-                                <span>{unit["annotations"]["reference_code"]}</span>
-                                <span>{unit["annotations"]["upload_date"]}</span>
-                                <p>{unit["annotations"][`online_title_${locale}`]}</p>
+                                <span>{unit["reference_code"]}</span>
+                                <span>{unit["incident_date_time"]}</span>
+                                <p>{unit["title"]}</p>
                                 <LocalizedLink to={`/database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
                               </div>
                            );
@@ -92,12 +92,10 @@ export const pageQuery = graphql`
 ) {
     edges {
      node {
-        id
-        annotations {
-          online_title_en
-          online_title_ar
-        }
-          online_link
+       id
+       title
+       link
+       incident_date_time
       }
     }
   }
