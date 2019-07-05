@@ -6,9 +6,9 @@ import SyriaMap from "../components/collections/map";
 import { LocaleContext } from '../context/locale-context';
 import ListCollection from '../components/collections/list';
 
-import "../style/chemical.scss";
+import "../style/collections.scss";
 
-const Chemical = ({data}) => {
+const ChemicalCollection = ({data}) => {
 
   const allUnits = data.allUnitsJson.edges.map(u => u.node);
   const [units, setUnits] = useState([]);
@@ -24,11 +24,11 @@ const Chemical = ({data}) => {
   
   return(
     <Layout>
-      <div className="chemical-collection">
+      <div className="collection">
         <div className="incidents-list">
           <ListCollection allUnits={allUnits} units={units} updateUnits={updateUnits}/>
         </div>
-        <div className="chemical-map">
+        <div className="incidents-map">
           <SyriaMap units={units}/>
         </div>
       </div>
@@ -37,10 +37,10 @@ const Chemical = ({data}) => {
 
 };
 
-export default Chemical;
+export default ChemicalCollection;
 
 export const pageQuery = graphql`
-  query chemicalCollectionReactQuery{
+  query chemicalCollectionQuery{
  allUnitsJson(limit: 50, filter: {location: {lat: {ne: null}}}) {
     edges {
       node {

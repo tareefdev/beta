@@ -28,13 +28,13 @@ const SyriaMap = ({units}) => {
               >
                 <Popup>
                   <span>
-
+                    {unit.title}
                   </span>
                 </Popup>
                 <Circle
                   center={{lat: unit.location.lat, lng: unit.location.lon}}
-                  fillColor="blue"
-                  radius={1400}
+                  fillColor="white"
+                  radius={6000}
                 />
               </Marker>
             );
