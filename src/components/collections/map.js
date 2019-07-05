@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
-import { graphql } from "gatsby";
-import {filter, isEmpty, uniqBy, isEqual, pick } from 'lodash/fp';
 import style from '../../style/leaflet.css';
 
-const MyMap = ({units}) => {
+const SyriaMap = ({units}) => {
 
   const default_viewport = {
     lat: 34.7000,
     lng: 38.9968,
     zoom: 7,
   };
-  
+
     const position = [default_viewport.lat, default_viewport.lng];
-//    const units = data.allUnitsJson.edges.map(u => u.node);
 
     if (typeof window !== 'undefined') {
       return (
@@ -27,6 +24,7 @@ const MyMap = ({units}) => {
               <Marker
                 key={unit.id}
                 position={{lat: unit.location.lat, lng: unit.location.lon}}
+           
               >
                 <Popup>
                   <span>
@@ -48,5 +46,5 @@ const MyMap = ({units}) => {
   
 };
 
-export default MyMap;
+export default SyriaMap;
 
