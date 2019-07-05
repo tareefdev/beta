@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import style from '../../style/leaflet.css';
-
+import { LocaleContext } from '../../context/locale-context';
+import LocalizedLink from "../../components/localizedLink";
 const SyriaMap = ({units}) => {
-
+  const locale = useContext(LocaleContext);
   const default_viewport = {
     lat: 34.7000,
     lng: 38.9968,
@@ -23,12 +24,13 @@ const SyriaMap = ({units}) => {
             return (
               <Marker
                 key={unit.id}
-                position={{lat: unit.location.lat, lng: unit.location.lon}}
-           
+                position={{lat: unit.location.lat, lng: unit.location.lon}}                
               >
                 <Popup>
                   <span>
-                    {unit.title}
+                    <LocalizedLink to={`/database/units/${unit.id}`}>
+                      {unit.title}
+                    </LocalizedLink>
                   </span>
                 </Popup>
                 <Circle

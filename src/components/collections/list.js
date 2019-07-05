@@ -1,14 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
 import LocalizedLink from "../../components/localizedLink";
 import tr from '../../components/useTranslations';
 
 const ListCollection = ({allUnits, units, updateUnits}) => {
-  const [queryTitle, setQueryTitle] = useState('');
+  
+//  const [queryTitle, setQueryTitle] = useState('');
+  let queryTitle = '';
   
   const listItems = units.map((unit) =>
                               <div
                                 key={unit["id"]}
                                 className="unit"
+                                onMouseEnter={e => console.log(`hi ${unit.id}`)}
+                                onMouseLeave={e => console.log(`chaoo`)}
                               >
 
                                 <span>{unit["incident_date_time"]}</span>
@@ -29,7 +33,7 @@ const ListCollection = ({allUnits, units, updateUnits}) => {
     <div>
       <input
         type="text"
-        onBlur={e => setQueryTitle(e.target.value)}
+        onBlur={e => queryTitle = e.target.value}
         placeholder={'Filter'}
       />
       <br/>
