@@ -12,6 +12,7 @@ const ChemicalCollection = ({data}) => {
 
   const allUnits = data.allUnitsJson.edges.map(u => u.node);
   const [units, setUnits] = useState([]);
+  const [hoveredUnit, setHoveredUnit] = useState({});
   const locale = useContext(LocaleContext);
   
   useEffect(() => {
@@ -21,15 +22,20 @@ const ChemicalCollection = ({data}) => {
   function updateUnits(filteredUnits) {
     setUnits(filteredUnits);  
   }
+
+  function setHoverUnit(unit) {
+    console.log(unit.id);
+    setHoveredUnit(unit);
+  }
   
   return(
     <Layout>
       <div className="collection">
         <div className="incidents-list">
-          <ListCollection allUnits={allUnits} units={units} updateUnits={updateUnits}/>
+          <ListCollection allUnits={allUnits} units={units} updateUnits={updateUnits} setHoveredUnit={setHoverUnit}/>
         </div>
         <div className="incidents-map">
-          <SyriaMap units={units}/>
+          <SyriaMap units={units} hoveredUnit={hoveredUnit}/>
         </div>
       </div>
     </Layout>

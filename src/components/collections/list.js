@@ -2,7 +2,7 @@ import React from 'react';
 import LocalizedLink from "../../components/localizedLink";
 import tr from '../../components/useTranslations';
 
-const ListCollection = ({allUnits, units, updateUnits}) => {
+const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
   
 //  const [queryTitle, setQueryTitle] = useState('');
   let queryTitle = '';
@@ -11,8 +11,8 @@ const ListCollection = ({allUnits, units, updateUnits}) => {
                               <div
                                 key={unit["id"]}
                                 className="unit"
-                                onMouseEnter={e => console.log(`hi ${unit.id}`)}
-                                onMouseLeave={e => console.log(`chaoo`)}
+                                onMouseEnter={e => setHoveredUnit(unit)}
+                                onMouseLeave={e => setHoveredUnit({})}
                               >
 
                                 <span>{unit["incident_date_time"]}</span>
