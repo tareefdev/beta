@@ -133,8 +133,8 @@ class Timeline extends Component {
 Timeline.propTypes = {
   height: PropTypes.number,
   width: PropTypes.number,
-  collectionName: string,
-  lang: string
+  collectionName: PropTypes.string,
+  lang: PropTypes.string
 };
 
 export default Timeline;
