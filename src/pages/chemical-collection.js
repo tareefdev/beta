@@ -24,7 +24,6 @@ const ChemicalCollection = ({data}) => {
   }
 
   function setHoverUnit(unit) {
-    console.log(unit.id);
     setHoveredUnit(unit);
   }
   
