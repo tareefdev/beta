@@ -92,13 +92,16 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
        
-        allUnitsJson {
-  	edges {
-         node {
-           id
-         }
-        }
-       }
+
+  allUnitsJson {
+    edges {
+      node {
+        id
+        lang
+      }
+    }
+  }
+      
       }
     `
     ).then(result => {
@@ -109,17 +112,15 @@ exports.createPages = async ({ graphql, actions }) => {
       const posts = result.data.allMdx.edges;      
       const units = result.data.allUnitsJson.edges;
 
-      Object.keys(locales).map(lang => {
-      units.forEach(unit => {
+      units.forEach(observation => {
         createPage({
-          path: `${lang}/database/units/${unit.node.id}`,
+          path: `${observation.node.lang}/database/units/${observation.node.id}`,
           component: unitTemplate,
           context: {
-            locale: lang,
-            id: unit.node.id,
+            locale: observation.node.lang,
+            id: observation.node.id,
           },
         });
-      });
       });
 
       const unitsPerPage = 150;

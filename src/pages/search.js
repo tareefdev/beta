@@ -19,8 +19,7 @@ const Search = ({data}) => {
     doc: {
       id: "id",
       field: [
-        `annotations:online_title_${locale}`,
-        `annotations:incident_date_time`
+        `title`
       ]
     }
   });
@@ -32,7 +31,7 @@ const Search = ({data}) => {
       return results.map((unit, i) => (
         <div className="item-search" key={i}>
           <a href={`/${locale}/database/units/${unit["id"]}`} className="link" rel="noopener noreferrer" target="_blank">
-            <h4>{unit["annotations"][`online_title_${locale}`]}</h4>
+            <h4>{unit['title']}</h4>
           </a>
         </div>
       ));
@@ -64,14 +63,10 @@ const Search = ({data}) => {
     } else {
       setResults([]);
       const unitsResult = index.search([{
-        field: `annotations:online_title_${locale}`,
+        field: `title`,
         query: queryTitle,
         bool: "and"
-      },{
-        field: "annotations:incident_date_time",
-        query: queryCollections,
-        bool: "or"
-      }]);
+      },]);
       setResults(unitsResult);
       return unitsResult;
     }
@@ -119,19 +114,12 @@ const Search = ({data}) => {
 export default Search;
 
 export const pageQuery = graphql`
-  query Units {
-   allUnitsJson {
+  query SearchDatabase {
+  allUnitsJson(filter: {lang: {eq: "ar"}}) {
     edges {
-     node {
+      node {
         id
-        annotations {
-          online_title_en
-          online_title_ar
-          incident_date_time
-          location_info {
-           location
-          }
-        }
+        title
       }
     }
   }

@@ -9,23 +9,26 @@ class UnitDetails extends React.Component {
   render() {
     const {
       id,
-      annotations,
+      link,
+      title,
+      incident_date_time,
+      href
     } = this.props.unit;
 
     const locale = this.props.locale;
-
+    
     const UintDetail = () => (
       <div>
         <div>
           <strong>
             <br/>
           </strong>
-          {annotations.incident_date}
+          {incident_date_time}
         </div>
         <br/>
         <div>
           <strong>{tr('Online Title')}:</strong><br/>
-          {annotations[`online_title_${locale}`]}
+          {title}
         </div>
         <br/>
         <div>
@@ -33,13 +36,13 @@ class UnitDetails extends React.Component {
         </div>
         <br/>
         <div>
-          <a href={annotations["online_link"]}>
+          <a href={link}>
             {tr('Online Link')}
           </a>         
         </div>
         <div>
           <video controls width="500">
-            <source src={annotations["sa_link"]} type="video/mp4">
+            <source src={href} type="video/mp4">
             </source>
           </video>
         </div>
@@ -134,11 +137,10 @@ export default UnitDetails;
 
 export const unitDetailFragment = graphql`
   fragment UnitDetails_detail on UnitsJson {
-     online_link
-    annotations {
-      online_title_en
-      online_title_ar
-     }
-
+     id
+     link
+     title
+     incident_date_time
+     href
   }
 `;

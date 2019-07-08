@@ -1,50 +1,64 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { graphql } from "gatsby";
-import LocalizedLink from "../components/localizedLink";
+
+import Layout from "../components/layout";
+import SyriaMap from "../components/collections/map";
 import { LocaleContext } from '../context/locale-context';
-import tr from '../components/useTranslations';
+import ListCollection from '../components/collections/list';
 
-import { rhythm } from "../utils/typography";
+import "../style/collections.scss";
 
-const UnitsList = ({data}) => {
+const ChemicalCollection = ({data}) => {
+
+  const allUnits = data.allUnitsJson.edges.map(u => u.node);
+  const [units, setUnits] = useState([]);
+  const [hoveredUnit, setHoveredUnit] = useState({});
   const locale = useContext(LocaleContext);
-  const units = data.allUnitsJson.edges.map(u => u.node);
+  
+  useEffect(() => {
+    setUnits(allUnits);
+  },[]);
+  
+  function updateUnits(filteredUnits) {
+    setUnits(filteredUnits);  
+  }
 
-  const listItems = units.map((unit) =>
-                              <div
-                                key={unit["id"]}
-                                className="unit"
-                              >
-                                <span>{unit["annotations"]["incident_date_time"]}</span>
-                                <p>{unit["annotations"][`online_title_${locale}`]}</p>
-                                <LocalizedLink to={`/database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
-                              </div>
-                             );
+  function setHoverUnit(unit) {
+    setHoveredUnit(unit);
+  }
   
   return(
-    <div>
-      {listItems}
-    </div>
+    <Layout>
+      <div className="collection">
+        <div className="incidents-list">
+          <ListCollection allUnits={allUnits} units={units} updateUnits={updateUnits} setHoveredUnit={setHoverUnit}/>
+        </div>
+        <div className="incidents-map">
+          <SyriaMap units={units} hoveredUnit={hoveredUnit}/>
+        </div>
+      </div>
+    </Layout>
   );
 
 };
 
-export default UnitsList;
+export default ChemicalCollection;
 
 export const pageQuery = graphql`
   query chemicalCollectionQuery{
- allUnitsJson {
+ allUnitsJson(limit: 50, filter: {location: {lat: {ne: null}}}) {
     edges {
-     node {
+      node {
         id
-        annotations {
-          incident_date_time
-          online_title_en
-          online_title_ar
+        incident_date_time
+        link
+        title
+        location {
+          lat
+          lon
         }
-          online_link
       }
     }
   }
-  }
+}
 `;
