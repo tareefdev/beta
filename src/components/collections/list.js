@@ -9,6 +9,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
   const [queryTitle, setQueryTitle] = useState('');
   const [queryDateBefore, setQueryDateBefore] = useState();
   const [queryDateAfter, setQueryDateAfter] = useState();
+  const [queryLocation, setQueryLocation] = useState('');
   const tr = useTranslations();
   
   const listItems = units.map((unit) =>
@@ -25,7 +26,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
                               </div>
                              );
 
-  function filterByText(){
+  function filter(){
     let updatedList = allUnits.filter(function(item){
       return item.title.toLowerCase().search(
         queryTitle.toLowerCase()) !== -1;
@@ -42,6 +43,12 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
         let d1 = new Date(item.incident_date_time);
         let d2 = new Date(queryDateAfter);
         return d1 > d2;
+      });
+    }
+    if (queryLocation.length > 0) {
+      updatedList = updatedList.filter(function (item) {
+        return item.location.name.toLowerCase().search(
+          queryLocation.toLowerCase()) !== -1;
       });
     }
     updateUnits(updatedList);
@@ -61,8 +68,15 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
         <br/>
         After
       <DayPickerInput onDayChange={day => setQueryDateAfter(day)} />
-        <br/>
-        <button onClick={filterByText}>
+      <br/>
+      Location
+      <input
+        type="text"
+        onChange={e => setQueryLocation(e.target.value)}
+        placeholder={'Location'}
+      />
+      <br/>
+        <button onClick={filter}>
           Search
         </button>
       {listItems}

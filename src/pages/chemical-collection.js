@@ -46,7 +46,7 @@ export default ChemicalCollection;
 
 export const pageQuery = graphql`
   query chemicalCollectionQuery{
-  allUnitsJson(limit: 50, filter: {location: {lat: {ne: null}}, lang: {eq: "en"}}) {
+  allUnitsJson(limit: 50, filter: {location: {lat: {ne: null}, name: {ne: null}}, lang: {eq: "en"}}) {
     edges {
       node {
         id
@@ -54,6 +54,7 @@ export const pageQuery = graphql`
         link
         title
         location {
+          name
           lat
           lon
         }
