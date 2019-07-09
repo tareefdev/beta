@@ -6,7 +6,6 @@ import Layout from "../components/layout";
 import SEO from "../components/seo";
 import ChildList from "../components/childList";
 import { rhythm, scale } from "../utils/typography";
-import tr from "../components/useTranslations";
 
 const BlogPostTemplate = ({ data }) => {
   const siteTitle = data.site.siteMetadata.title;
@@ -17,7 +16,6 @@ const BlogPostTemplate = ({ data }) => {
   
   if (postLevel == '1') {
     const childPosts = data.allMdx.edges;
-//    console.log(JSON.stringify(child));
     child = (
       <ChildList posts={childPosts}/>
     );

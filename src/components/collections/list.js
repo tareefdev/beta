@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import LocalizedLink from "../../components/localizedLink";
-import tr from '../../components/useTranslations';
+import useTranslations from '../../components/useTranslations';
 
 const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
   
   const [queryTitle, setQueryTitle] = useState('');
+  const tr = useTranslations();
 
   const query = {
 //    title: '',
@@ -47,10 +48,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
         return d1 > d2;
       });
     }
-    console.log(queryTitle);
-    console.log(query.dateAfter);
     updateUnits(updatedList);
-    console.log(`we have ${updatedList.length} results`);
   }
 
   return (

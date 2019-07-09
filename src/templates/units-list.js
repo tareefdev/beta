@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 
 import { LocaleContext } from '../context/locale-context';
 import LocalizedLink from "../components/localizedLink";
-import tr from '../components/useTranslations';
+import useTranslations from '../components/useTranslations';
 
 const UnitsList = ({data, pageContext}) => {
   const [Units, setUnits] = useState('');
@@ -18,6 +18,7 @@ const UnitsList = ({data, pageContext}) => {
   }
   
   const locale = useContext(LocaleContext);
+  const tr = useTranslations();
   const units = data.allUnitsJson.edges.map(u => u.node);
 
   // helper

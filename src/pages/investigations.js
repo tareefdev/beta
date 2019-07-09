@@ -5,7 +5,6 @@ import Layout from "../components/layout";
 import LocalizedLink from "../components/localizedLink";
 import SEO from "../components/seo";
 
-import tr from "../components/useTranslations";
 import { LocaleContext } from '../context/locale-context';
 import { rhythm } from "../utils/typography";
 

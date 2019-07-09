@@ -1,18 +1,12 @@
-// import * as PropTypes from "prop-types";
 import React from "react";
 import { graphql } from "gatsby";
 import UnitDetails from "../components/unitDetails";
 import DataBaseLayout from "../layout/databaseLayout";
 
-class PostTemplate extends React.Component {
-  // static propTypes = {
-  //   data: PropTypes.shape({
-  //     postsJson: PropTypes.object.isRequired,
-  //   }),
-  // }
-  render() {
+function unitTemplate({pageContext, data, location}) {
+
     // here you can use this.props.pageContext.locale
-    const locale = this.props.pageContext.locale;
+  const locale = pageContext.locale;
     let isModal = false;
     // We don't want to show the modal if a user navigates
     // directly to a post so if this code is running on Gatsby's
@@ -25,14 +19,14 @@ class PostTemplate extends React.Component {
       isModal = true;
     }
     return (
-      <DataBaseLayout location={this.props.location} isModal={isModal}>
-        <UnitDetails unit={this.props.data.unitsJson} locale={locale} />
+      <DataBaseLayout location={location} isModal={isModal}>
+        <UnitDetails unit={data.unitsJson} locale={locale} />
       </DataBaseLayout>
     );
-  }
-}
 
-export default PostTemplate;
+};
+
+export default unitTemplate;
 
 export const pageQuery = graphql`
   query($id: String!) {

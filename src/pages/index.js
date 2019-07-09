@@ -1,9 +1,10 @@
 import React from 'react';
 import Layout from '../components/layout';
 import LocalizedLink from '../components/localizedLink';
-import tr from '../components/useTranslations';
+import useTranslations from '../components/useTranslations';
 
 const Index = () => {
+  const tr = useTranslations();
   return (
     <Layout>
       INDEX PAGE

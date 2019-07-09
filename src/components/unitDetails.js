@@ -3,21 +3,19 @@ import React from "react";
 import presets from "../utils/presets";
 import typography, { rhythm, scale } from "../utils/typography";
 import { graphql } from "gatsby";
-import tr from "../components/useTranslations";
+import useTranslations from "../components/useTranslations";
 
-class UnitDetails extends React.Component {
-  render() {
+function UnitDetails({unit, locale}) {
+  const tr = useTranslations();
     const {
       id,
       link,
       title,
       incident_date_time,
       href
-    } = this.props.unit;
+    } = unit;
 
-    const locale = this.props.locale;
-    
-    const UintDetail = () => (
+  const UintDetail = () => (
       <div>
         <div>
           <strong>
@@ -130,7 +128,7 @@ class UnitDetails extends React.Component {
         </div>
       </div>
     );
-  }
+  
 }
 
 export default UnitDetails;

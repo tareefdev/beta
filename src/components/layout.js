@@ -5,7 +5,7 @@ import { rhythm, scale } from "../utils/typography";
 import { LocationContext } from '../context/locale-context';
 import { LocaleContext } from '../context/locale-context';
 import LocalizedLink from '../components/localizedLink';
-import tr from '../components/useTranslations';
+import useTranslations from '../components/useTranslations';
 
 import '../style/main.scss';
 
@@ -13,6 +13,7 @@ const Layout = ({ children }) => {
   
   const locale = useContext(LocaleContext);
   const location = useContext(LocationContext);
+  const tr = useTranslations();
   
   const rootPath = `${__PATH_PREFIX__}/`;
   const header = (
