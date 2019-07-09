@@ -112,13 +112,13 @@ exports.createPages = async ({ graphql, actions }) => {
       const posts = result.data.allMdx.edges;      
       const units = result.data.allUnitsJson.edges;
 
-      units.forEach(observation => {
+      units.forEach(unit => {
         createPage({
-          path: `${observation.node.lang}/database/units/${observation.node.id}`,
+          path: `${unit.node.lang}/database/units/${unit.node.id}`,
           component: unitTemplate,
           context: {
-            locale: observation.node.lang,
-            id: observation.node.id,
+            locale: unit.node.lang,
+            id: unit.node.id,
           },
         });
       });

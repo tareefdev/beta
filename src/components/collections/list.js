@@ -7,13 +7,9 @@ import useTranslations from '../../components/useTranslations';
 const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
   
   const [queryTitle, setQueryTitle] = useState('');
+  const [queryDateBefore, setQueryDateBefore] = useState();
+  const [queryDateAfter, setQueryDateAfter] = useState();
   const tr = useTranslations();
-
-  const query = {
-//    title: '',
-    dateBefore: undefined,
-    dateAfter: undefined
-  };
   
   const listItems = units.map((unit) =>
                               <div
@@ -34,17 +30,17 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
       return item.title.toLowerCase().search(
         queryTitle.toLowerCase()) !== -1;
     });
-    if (query.dateBefore !== undefined) {
+    if (queryDateBefore !== undefined) {
       updatedList = updatedList.filter(function (item) {
         const d1 = new Date(item.incident_date_time);
-        const d2 = new Date(query.dateBefore);
+        const d2 = new Date(queryDateBefore);
         return d1 < d2;
       });
     }
-    if (query.dateAfter !== undefined) {
+    if (queryDateAfter !== undefined) {
       updatedList = updatedList.filter(function (item) {
         let d1 = new Date(item.incident_date_time);
-        let d2 = new Date(query.dateAfter);
+        let d2 = new Date(queryDateAfter);
         return d1 > d2;
       });
     }
@@ -53,6 +49,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
 
   return (
     <div>
+      Title
         <input
           type="text"
           onChange={e => setQueryTitle(e.target.value)}
@@ -60,14 +57,10 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
         />
         <br/>
         Before
-        <DayPickerInput onDayChange={day => {
-          query.dateBefore = day;
-        }} />
+      <DayPickerInput onDayChange={day => setQueryDateBefore(day)} />
         <br/>
         After
-        <DayPickerInput onDayChange={day => {
-          query.dateAfter = day;
-        }} />
+      <DayPickerInput onDayChange={day => setQueryDateAfter(day)} />
         <br/>
         <button onClick={filterByText}>
           Search
