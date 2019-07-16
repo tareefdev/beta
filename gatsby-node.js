@@ -38,11 +38,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
     const filePath= node.fileAbsolutePath;
     const pathAsArray = filePath.split('/');
-//    const isChild = !(pathAsArray[pathAsArray.length - 2] == 'blog');
-//    if (isChild) {
+
     const parent = pathAsArray[pathAsArray.length - 2];
     createNodeField({ node, name: `parentDir`, value: parent });
-//    }
     
     const name = path.basename(node.fileAbsolutePath, `.md`);
     const defaultKey = findKey(locales, o => o.default === true);
@@ -50,13 +48,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const lang = isDefault ? defaultKey : name.split(`_`)[1];
     createNodeField({ node, name: `locale`, value: lang });
     createNodeField({ node, name: `isDefault`, value: isDefault });
-//    createNodeField({ node, name: `isChild`, value: isChild });
 
     let value = createFilePath({ node, getNode });
     value = value.includes('_') ? `${value.slice(0, -4)}` : value;
-     if (value.includes('index') && !(value.includes('html'))) {
-       value = `${value}.html`;
-     }
+    if (value.includes('index') && !(value.includes('html'))) {
+      value = `${value}.html`;
+    }
     createNodeField({
       name: `slug`,
       node,
@@ -70,12 +67,11 @@ exports.createPages = async ({ graphql, actions }) => {
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
   const unitTemplate = path.resolve(`src/templates/unit-page.js`);
   const unitListTemplate = path.resolve(`src/templates/units-list.js`);
-    return graphql(
-      `
+  return graphql(
+    `
       {
         allMdx(
           sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
         ) {
           edges {
             node {
@@ -104,67 +100,67 @@ exports.createPages = async ({ graphql, actions }) => {
       
       }
     `
-    ).then(result => {
-      if (result.errors) {
-        throw result.errors;
-      }
+  ).then(result => {
+    if (result.errors) {
+      throw result.errors;
+    }
 
-      const posts = result.data.allMdx.edges;      
-      const units = result.data.allUnitsJson.edges;
+    const posts = result.data.allMdx.edges;      
+    const units = result.data.allUnitsJson.edges;
 
-      units.forEach(unit => {
-        createPage({
-          path: `${unit.node.lang}/database/units/${unit.node.id}`,
-          component: unitTemplate,
-          context: {
-            locale: unit.node.lang,
-            id: unit.node.id,
-          },
-        });
+    units.forEach(unit => {
+      createPage({
+        path: `${unit.node.lang}/database/units/${unit.node.id}`,
+        component: unitTemplate,
+        context: {
+          locale: unit.node.lang,
+          id: unit.node.id,
+        },
       });
-
-      const unitsPerPage = 150;
-      const totalPages = Math.ceil(units.length / unitsPerPage);
-
-      Object.keys(locales).map(lang => {
-        Array.from({ length: totalPages }).forEach((_, i) => {
-          createPage({
-            path: i === 0 ? `${lang}/database` : `${lang}/database/${i + 1}`,
-            component: unitListTemplate,
-            context: {
-              limit: unitsPerPage,
-              skip: i * unitsPerPage,
-              totalPages,
-              currentPage: i + 1
-            },
-          });
-        });
-      });
-      
-      posts.forEach((post, index) => {
-        const previous = index === posts.length - 1 ? null : posts[index + 1].node;
-        const next = index === 0 ? null : posts[index - 1].node;
-        const slug = post.node.fields.slug;
-        const title = post.node.frontmatter.title;
-        const locale = post.node.fields.locale;
-        const parentDir = post.node.fields.parentDir;
-        const path = `${locale}${post.node.fields.slug}`;
-
-        createPage({
-          path: path,
-          component: blogPost,
-          context: {
-            locale,
-            title,
-            slug: slug,
-            parentDir,
-            previous,
-            next,
-          },
-        });
-      });
-      return null;
     });
+
+    const unitsPerPage = 150;
+    const totalPages = Math.ceil(units.length / unitsPerPage);
+
+    Object.keys(locales).map(lang => {
+      Array.from({ length: totalPages }).forEach((_, i) => {
+        createPage({
+          path: i === 0 ? `${lang}/database` : `${lang}/database/${i + 1}`,
+          component: unitListTemplate,
+          context: {
+            limit: unitsPerPage,
+            skip: i * unitsPerPage,
+            totalPages,
+            currentPage: i + 1
+          },
+        });
+      });
+    });
+    
+    posts.forEach((post, index) => {
+      const previous = index === posts.length - 1 ? null : posts[index + 1].node;
+      const next = index === 0 ? null : posts[index - 1].node;
+      const slug = post.node.fields.slug;
+      const title = post.node.frontmatter.title;
+      const locale = post.node.fields.locale;
+      const parentDir = post.node.fields.parentDir;
+      const path = `${locale}${post.node.fields.slug}`;
+
+      createPage({
+        path: path,
+        component: blogPost,
+        context: {
+          locale,
+          title,
+          slug: slug,
+          parentDir,
+          previous,
+          next,
+        },
+      });
+    });
+    return null;
+  });
 };
 
 
