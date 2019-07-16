@@ -4,6 +4,7 @@
   }
   .data-numbers {
     display: flex;
+    flex-flow: row wrap;
     justify-content: space-evenly;
     margin-top: 4rem;
     margin-bottom: 2rem;
@@ -14,6 +15,7 @@
 
   .method-workflow {
     display: flex;
+    flex-flow: row wrap;
     justify-content: space-evenly;
     .method-element {
       margin: auto .5rem;
@@ -26,9 +28,15 @@
 
   .latest-releases {
     display: flex;
-    justify-content: space-between;
+    flex-flow: row wrap;
+    justify-content: space-around;
     .release-element {
-      h3 {margin-top: 3rem}
+      display: flex;
+      flex-direction: column;
+      h3 {
+	margin-top: 3rem;
+	flex-grow: 2;
+      }
       flex-basis: 30vw;
     }
   }

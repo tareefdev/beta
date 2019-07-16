@@ -70,6 +70,7 @@ const Index = ({ data }) => {
         </div>
 
         <hr></hr>
+        
         <h2>Our latest releases</h2>
         <div className="latest-releases">
           <div className="release-element">
@@ -83,6 +84,9 @@ const Index = ({ data }) => {
             <p>{latestInvestigation.desc}</p>
           </div>
         </div>
+
+        <hr></hr>
+        <h2>Dicover our sources</h2>
       </div>
     </Layout>
   );
