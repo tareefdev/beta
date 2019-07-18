@@ -3,7 +3,7 @@ import React from "react";
 import presets from "../utils/presets";
 import typography, { rhythm, scale } from "../utils/typography";
 import { graphql } from "gatsby";
-import useTranslations from "../components/useTranslations";
+import useTranslations from "../useTranslations";
 
 function UnitDetails({unit, locale}) {
   const tr = useTranslations();

@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { graphql } from "gatsby";
 
-import Layout from "../components/layout";
-import SyriaMap from "../components/collections/map";
 import { LocaleContext } from '../context/locale-context';
-import ListCollection from '../components/collections/list';
+import Layout from "../components/layout";
+import ListUnits from '../components/database/ListUnits';
+import SyriaMap from "../components/database/map";
 
 import "../style/collections.scss";
 
@@ -31,7 +31,7 @@ const ChemicalCollection = ({data}) => {
     <Layout>
       <div className="collection">
         <div className="incidents-list">
-          <ListCollection allUnits={allUnits} units={units} updateUnits={updateUnits} setHoveredUnit={setHoverUnit}/>
+          <ListUnits allUnits={allUnits} units={units} updateUnits={updateUnits} setHoveredUnit={setHoverUnit}/>
         </div>
         <div className="incidents-map">
           <SyriaMap units={units} hoveredUnit={hoveredUnit}/>

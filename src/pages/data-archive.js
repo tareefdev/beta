@@ -3,11 +3,11 @@ import { graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import { LocaleContext } from '../context/locale-context';
-import ListCollection from '../components/collections/list';
+import ListUnits from '../components/database/ListUnits';
 
 import "../style/collections.scss";
 
-const Test = ({data}) => {
+const DataArchived = ({data}) => {
 
   const allUnits = data.allUnitsJson.edges.map(u => u.node);
  
@@ -18,7 +18,7 @@ const Test = ({data}) => {
   useEffect(() => {
     setUnits(allUnits);
   },[]);
-  console.log(`allUnits length is ${units.length}`);
+  
   function updateUnits(filteredUnits) {
     setUnits(filteredUnits);  
   }
@@ -31,7 +31,7 @@ const Test = ({data}) => {
     <Layout>
       <div className="collection">
         <div className="incidents-list">
-          <ListCollection allUnits={allUnits} units={units} updateUnits={updateUnits} setHoveredUnit={setHoverUnit}/>
+          <ListUnits allUnits={allUnits} units={units} updateUnits={updateUnits} setHoveredUnit={setHoverUnit}/>
         </div>
         <div className="incidents-map">
         </div>
@@ -41,7 +41,7 @@ const Test = ({data}) => {
 
 };
 
-export default Test;
+export default DataArchived;
 
 export const pageQuery = graphql`
   query testQuery{

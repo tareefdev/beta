@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
-import UnitDetails from "../components/unitDetails";
+import UnitDetails from "../components/database/UnitDetails";
 import DataBaseLayout from "../layout/databaseLayout";
 
 function unitTemplate({pageContext, data, location}) {
@@ -24,7 +24,7 @@ function unitTemplate({pageContext, data, location}) {
       </DataBaseLayout>
     );
 
-};
+}
 
 export default unitTemplate;
 

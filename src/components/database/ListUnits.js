@@ -4,7 +4,7 @@ import 'react-day-picker/lib/style.css';
 import LocalizedLink from "../../components/localizedLink";
 import useTranslations from '../../components/useTranslations';
 
-const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
+const ListUnits = ({allUnits, units, updateUnits, setHoveredUnit}) => {
   
   const [queryTitle, setQueryTitle] = useState('');
   const [queryDateBefore, setQueryDateBefore] = useState();
@@ -12,7 +12,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
   const [queryLocation, setQueryLocation] = useState('');
   const tr = useTranslations();
   
-  const listItems2 = units.map((unit) =>
+  const fullListItems = units.map((unit) =>
                               <div
                                 key={unit["id"]}
                                 className="unit"
@@ -24,8 +24,9 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
                                 <p>{unit["title"]}</p>
                                 <LocalizedLink to={`database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
                               </div>
-                             );
-  const listItems = listItems2.slice(0, 10);
+                              );
+  
+  const listItems = fullListItems.slice(0, 100);
 
   function filter(){
     let updatedList = allUnits.filter(function(item){
@@ -60,7 +61,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
       Title
         <input
           type="text"
-          onChange={e => setQueryTitle(e.target.value)}
+          onBlur={e => setQueryTitle(e.target.value)}
           placeholder={'Filter'}
         />
         <br/>
@@ -73,7 +74,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
       Location
       <input
         type="text"
-        onChange={e => setQueryLocation(e.target.value)}
+        onBlur={e => setQueryLocation(e.target.value)}
         placeholder={'Location'}
       />
       <br/>
@@ -85,4 +86,4 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
   );
 };
 
-export default ListCollection;
+export default ListUnits;
