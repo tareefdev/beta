@@ -12,7 +12,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
   const [queryLocation, setQueryLocation] = useState('');
   const tr = useTranslations();
   
-  const listItems = units.map((unit) =>
+  const listItems2 = units.map((unit) =>
                               <div
                                 key={unit["id"]}
                                 className="unit"
@@ -25,6 +25,7 @@ const ListCollection = ({allUnits, units, updateUnits, setHoveredUnit}) => {
                                 <LocalizedLink to={`database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
                               </div>
                              );
+  const listItems = listItems2.slice(0, 10);
 
   function filter(){
     let updatedList = allUnits.filter(function(item){
