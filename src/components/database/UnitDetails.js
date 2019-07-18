@@ -1,9 +1,9 @@
 import React from "react";
-
-import presets from "../utils/presets";
-import typography, { rhythm, scale } from "../utils/typography";
 import { graphql } from "gatsby";
+
 import useTranslations from "../useTranslations";
+import presets from "../../utils/presets";
+import typography, { rhythm, scale } from "../../utils/typography";
 
 function UnitDetails({unit, locale}) {
   const tr = useTranslations();
