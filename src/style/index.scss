@@ -11,19 +11,33 @@
     h3,h5 {
       margin-top: .5rem;
     }
+    @media (max-width: 600px){
+      .number{
+	flex: 1 50%;
+      }
+    }
   }
 
   .method-workflow {
     display: flex;
-    flex-flow: row wrap;
     justify-content: space-evenly;
     .method-element {
-      margin: auto .5rem;
+      flex: 1 0;
       h3 {
 	text-align: center;
       }  
     }
-    
+    @media (max-width: 800px){
+      flex-wrap: wrap;
+      .method-element {
+	flex: 1 50%;
+      }
+    }
+    @media (max-width: 600px) {
+      .method-element {
+	flex: 1 100%;
+      }
+    }
   }
 
   .latest-releases {

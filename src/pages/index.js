@@ -81,7 +81,7 @@ const Index = ({ data }) => {
           <div className="release-element">
             <h3>{latestDatabase.title}</h3>
             <small>Database</small>
-            <p>{latestInvestigation.desc}</p>
+            <p>{latestDatabase.desc}</p>
           </div>
         </div>
 
