@@ -14,8 +14,11 @@ const Index = ({ data }) => {
   const partials = data.partials.edges.map(p => p.node);
   const latestInvestigation = data.latestInvestigation.edges[0].node.frontmatter;
   const latestDatabase = data.latestDatabase.edges[0].node.frontmatter;
+  const latestTechAdvocacy = data.latestTechAdvocacy.edges[0].node.frontmatter;
   const numbers = data.allSiteMetadataJson.edges[0].node.numbers;
   const about = partials[0].code.body;
+  console.log(latestInvestigation);
+  
   return (
     <Layout>
       <div className="index-page">
@@ -74,6 +77,11 @@ const Index = ({ data }) => {
         <h2>Our latest releases</h2>
         <div className="latest-releases">
           <div className="release-element">
+            <h3>{latestTechAdvocacy.title}</h3>
+            <small>Tech Advocacy</small>
+            <p>{latestTechAdvocacy.desc}</p>
+          </div>
+          <div className="release-element">
             <h3>{latestInvestigation.title}</h3>
             <small>Investigation</small>
             <p>{latestInvestigation.desc}</p>
@@ -82,7 +90,7 @@ const Index = ({ data }) => {
             <h3>{latestDatabase.title}</h3>
             <small>Database</small>
             <p>{latestDatabase.desc}</p>
-          </div>
+          </div>          
         </div>
 
         <hr></hr>
@@ -101,6 +109,22 @@ query IndexPartials($locale: String!) {
       node {
         code {
           body
+        }
+      }
+    }
+  }
+latestTechAdvocacy :allMdx(
+   filter: { fields: { locale: { eq: $locale } }
+       fileAbsolutePath: {regex: "/content\/tech-advocacy/"}
+       frontmatter: {level: {lte: 1}} }
+       sort: { fields: [frontmatter___date], order: DESC }
+    limit: 1
+) {
+    edges {
+      node {
+          frontmatter {
+          title
+          desc
         }
       }
     }

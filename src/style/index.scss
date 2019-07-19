@@ -42,8 +42,8 @@
 
   .latest-releases {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
+    flex-flow: row;
+    justify-content: space-between;
     .release-element {
       display: flex;
       flex-direction: column;
