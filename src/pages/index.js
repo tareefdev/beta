@@ -7,6 +7,8 @@ import LocalizedLink from '../components/localizedLink';
 import { LocaleContext } from '../context/locale-context';
 import useTranslations from '../components/useTranslations';
 
+import SVGMap from '../components/sy-map';
+
 const Index = ({ data }) => {
   const locale = useContext(LocaleContext);
   const tr = useTranslations();
@@ -17,7 +19,6 @@ const Index = ({ data }) => {
   const latestTechAdvocacy = data.latestTechAdvocacy.edges[0].node.frontmatter;
   const numbers = data.allSiteMetadataJson.edges[0].node.numbers;
   const about = partials[0].code.body;
-  console.log(latestInvestigation);
   
   return (
     <Layout>
@@ -25,6 +26,7 @@ const Index = ({ data }) => {
         <MDXRenderer>
           { about}
         </MDXRenderer>
+        <SVGMap/>
         <div className="data-numbers">
           <div className="number">
             <h3>{numbers.collectedVideo}</h3>
