@@ -56,11 +56,12 @@ export const pageQuery = graphql`
       }
     }
     allMdx(
-       filter: { fields: { locale: { eq: $locale } }
-fileAbsolutePath: {regex: "/content\/collections/"}
- frontmatter: {level: {lte: 1}} }
-       sort: { fields: [frontmatter___date], order: DESC }
-) {
+       filter: { 
+        fields: { locale: { eq: $locale } }
+        frontmatter: {
+         type: {eq: "database"}
+         level: {lte: 1}}}
+       sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
           excerpt

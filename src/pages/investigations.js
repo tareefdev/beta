@@ -53,11 +53,12 @@ export const pageQuery = graphql`
       }
     }
     allMdx(
-       filter: { fields: { locale: { eq: $locale } }
-       fileAbsolutePath: {regex: "/content\/investigations/"}
-       frontmatter: {level: {lte: 1}} }
-       sort: { fields: [frontmatter___date], order: DESC }
-) {
+       filter: { 
+         fields: { locale: { eq: $locale } }
+         frontmatter: {
+          type: {eq: "investigation"}
+          level: {lte: 1}}}
+       sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
           excerpt

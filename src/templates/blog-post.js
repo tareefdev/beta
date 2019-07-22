@@ -11,13 +11,12 @@ const BlogPostTemplate = ({ data }) => {
   const siteTitle = data.site.siteMetadata.title;
   const post = data.mdx;
   const postLevel = post.frontmatter.level;
-  const parentDir = post.frontmatter.parentDir;
-  let child;
+  const parentDir = post.frontmatter.parentDir; // used in the Graphql query
+  let childPosts;
   
   if (postLevel == '1') {
-    const childPosts = data.allMdx.edges;
-    child = (
-      <ChildList posts={childPosts}/>
+    childPosts = (
+      <ChildList posts={data.allMdx.edges}/>
     );
   }
 
@@ -28,7 +27,7 @@ const BlogPostTemplate = ({ data }) => {
           description={post.frontmatter.description || post.excerpt}
         />
       <h1>{post.frontmatter.title}</h1>
-      {child}
+      {childPosts}
         <p
           style={{
             ...scale(-1 / 5),
