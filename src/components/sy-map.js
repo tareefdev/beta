@@ -1,15 +1,24 @@
 import React, { useRef } from 'react';
+//import { useStaticQuery, graphql } from "gatsby";
 import PropTypes from 'prop-types';
 import { geoMercator } from 'd3-geo';
 import * as d3 from 'd3';
 import * as topojson from 'topojson';
-import Districts from './data/syria-districts-topojson';
-import Sources from './data/sy-sources';
+import Districts from '../../data/syriaDistricts';
+import Sources from '../../data/sySources';
 //import { mapConstants } from "./data/map-constants"; 
 
-const SVGMap = () => {
-
+const SVGMap = ({hoveredDistrict, setHoveredDistrict}) => {
+  
   const svgEl = useRef();
+  
+
+  function mouseover(d) {
+    console.log(d.properties.NAME_2);
+    setHoveredDistrict(d);
+  }
+
+  console.log('svg');
   
   const margin = {top: 10, left: 10, bottom: 10, right: 2};
   let width = 700 - margin.left - margin.right;
@@ -25,8 +34,6 @@ const SVGMap = () => {
   const svg = d3.select(svgEl.current)
         .attr('width', width)
         .attr('height', height);
-
-  console.log(svgEl);
 
   const path = d3.geoPath()
         .projection(projection);
@@ -68,20 +75,15 @@ const SVGMap = () => {
     .attr('d', path)
     .attr('district', d => d.properties.NAME_2)
     .attr('stroke', '#404040')
-    .attr('stroke-width', 0.3);
+    .attr('stroke-width', 0.3)
+    .on('mouseover', mouseover);
 
 
   return (
     <div>
-      <svg ref={svgEl}>
-      </svg>
+      <svg ref={svgEl}></svg>
     </div>
   );
-};
-
-SVGMap.propTypes = {
-  height: PropTypes.number,
-  width: PropTypes.number
 };
 
 export default SVGMap;

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { graphql } from 'gatsby';
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 
@@ -10,6 +10,14 @@ import useTranslations from '../components/useTranslations';
 import SVGMap from '../components/sy-map';
 
 const Index = ({ data }) => {
+  const [hoveredDistrict, setHoveredDistrict] = useState({});
+
+  // function setHoverDistrict(district) {
+  //   setHoveredDistrict(district);
+  // };
+
+  console.log(hoveredDistrict);
+  
   const locale = useContext(LocaleContext);
   const tr = useTranslations();
   
@@ -26,7 +34,10 @@ const Index = ({ data }) => {
         <MDXRenderer>
           { about}
         </MDXRenderer>
-        <SVGMap/>
+        
+    <div>{hoveredDistrict.properties ? hoveredDistrict.properties.NAME_2 : 'hi'}</div>
+        <SVGMap hoveredDistrict={hoveredDistrict }setHoveredDistrict={setHoveredDistrict} />
+        
         <div className="data-numbers">
           <div className="number">
             <h3>{numbers.collectedVideo}</h3>
