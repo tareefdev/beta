@@ -10,14 +10,8 @@ import useTranslations from '../components/useTranslations';
 import SVGMap from '../components/sy-map';
 
 const Index = ({ data }) => {
-  const [hoveredDistrict, setHoveredDistrict] = useState({});
+  const [hoveredDistrict, setHoveredDistrict] = useState('hi');
 
-  // function setHoverDistrict(district) {
-  //   setHoveredDistrict(district);
-  // };
-
-  console.log(hoveredDistrict);
-  
   const locale = useContext(LocaleContext);
   const tr = useTranslations();
   
@@ -35,8 +29,8 @@ const Index = ({ data }) => {
           { about}
         </MDXRenderer>
         
-    <div>{hoveredDistrict.properties ? hoveredDistrict.properties.NAME_2 : 'hi'}</div>
-        <SVGMap hoveredDistrict={hoveredDistrict }setHoveredDistrict={setHoveredDistrict} />
+    <div>{hoveredDistrict}</div>
+        <SVGMap setHoveredDistrict={setHoveredDistrict} />
         
         <div className="data-numbers">
           <div className="number">
