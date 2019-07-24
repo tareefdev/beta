@@ -10,11 +10,14 @@ import useTranslations from '../components/useTranslations';
 import SVGMap from '../components/sy-map';
 
 const Index = ({ data }) => {
-  const [hoveredDistrict, setHoveredDistrict] = useState('hi');
+  const [hoveredDistrict, setHoveredDistrict] = useState({
+    name: 'On the whole, We have 2500 Sources',
+    sources: ''
+  });
 
   const locale = useContext(LocaleContext);
   const tr = useTranslations();
-  
+
   const partials = data.partials.edges.map(p => p.node);
   const latestInvestigation = data.latestInvestigation.edges[0].node.frontmatter;
   const latestDatabase = data.latestDatabase.edges[0].node.frontmatter;
@@ -29,9 +32,7 @@ const Index = ({ data }) => {
           { about}
         </MDXRenderer>
         
-        <div>{hoveredDistrict}</div>
-        
-        <SVGMap setHoveredDistrict={setHoveredDistrict} />
+      
         
         <div className="data-numbers">
           <div className="number">
@@ -103,6 +104,12 @@ const Index = ({ data }) => {
 
         <hr></hr>
         <h2>Dicover our sources</h2>
+
+        <div>{hoveredDistrict.sources == '' ? hoveredDistrict.name : `we have ${hoveredDistrict.sources} sources in ${hoveredDistrict.name}`}</div>
+        
+        <SVGMap setHoveredDistrict={setHoveredDistrict} />
+
+       
       </div>
     </Layout>
   );

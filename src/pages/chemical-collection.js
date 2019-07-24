@@ -16,8 +16,8 @@ const ChemicalCollection = ({data}) => {
   const locale = useContext(LocaleContext);
   
   useEffect(() => {
-    setUnits(allUnits);
-  },[]);
+    setUnits(allUnits);}
+            ,[]);
   
   function updateUnits(filteredUnits) {
     setUnits(filteredUnits);  
