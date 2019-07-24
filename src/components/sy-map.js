@@ -11,8 +11,8 @@ const SVGMap = ({setHoveredDistrict}) => {
 
   // Draw the map after component get mounted, so svgEl is not null
   useEffect(() => {
-    drawMap(); 
-  });
+    drawMap(); }
+            , []);
 
   const margin = {top: 10, left: 10, bottom: 10, right: 2};
   let width = 700 - margin.left - margin.right;
@@ -45,16 +45,18 @@ const SVGMap = ({setHoveredDistrict}) => {
   // It's better to use css's filter rule with contrast, although there is a bug with it in chrome https://stackoverflow.com/questions/32567156/why-dont-css-filters-work-on-svg-elements-in-chrome
   // https://bugs.chromium.org/p/chromium/issues/detail?id=109224    
   function mouseover(d) {
-    setHoveredDistrict(d.properties.NAME_2);
+    setHoveredDistrict(d.properties.NAME_2)
+   
     const originalColor = d3.select(this).attr('Ocolor');
     d3.selectAll('.district').attr('fill', d => coloriz(d, 'dim'));
     d3.select(this).attr('fill', originalColor);
-    d3.select(this).style('stroke-width', 1.5);
+   d3.select(this).style('stroke-width', 1.5);
   }
 
   function mouseout() {
-    d3.selectAll('.district').attr('fill', d => coloriz(d, 'original'));
-    d3.select(this).style('stroke-width', 0.3);
+//    setHoveredDistrict('');
+   d3.selectAll('.district').attr('fill', d => coloriz(d, 'original'));
+   d3.select(this).style('stroke-width', 0.3);
   }
 
   function coloriz(d, type){
@@ -72,6 +74,7 @@ const SVGMap = ({setHoveredDistrict}) => {
   }
 
   function drawMap() {
+    console.log('drawmap')
     const projection = d3.geoMercator()
           .center(syriaCenter)
           .scale(width * [mapRatio + mapRatioAdjuster]);
