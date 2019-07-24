@@ -29,7 +29,8 @@ const Index = ({ data }) => {
           { about}
         </MDXRenderer>
         
-    <div>{hoveredDistrict}</div>
+        <div>{hoveredDistrict}</div>
+        
         <SVGMap setHoveredDistrict={setHoveredDistrict} />
         
         <div className="data-numbers">

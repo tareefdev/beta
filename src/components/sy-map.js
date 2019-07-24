@@ -9,8 +9,9 @@ const SVGMap = ({setHoveredDistrict}) => {
   
   const svgEl = useRef(null);
 
+  // Draw the map after component get mounted, so svgEl is not null
   useEffect(() => {
-    drawMap();
+    drawMap(); 
   });
 
   const margin = {top: 10, left: 10, bottom: 10, right: 2};
@@ -44,27 +45,15 @@ const SVGMap = ({setHoveredDistrict}) => {
   // It's better to use css's filter rule with contrast, although there is a bug with it in chrome https://stackoverflow.com/questions/32567156/why-dont-css-filters-work-on-svg-elements-in-chrome
   // https://bugs.chromium.org/p/chromium/issues/detail?id=109224    
   function mouseover(d) {
-    const Ocolor = d3.select(this).attr('Ocolor');
-    const governorate = d.properties.NAME_1;
-    const district = d.properties.NAME_2;
-    const result = Sources.filter(obj => obj.governorate === governorate);
-    const soruces = result[0].districts[district];
-    gov.transition().style('opacity', 1);
-    gov.html(d.properties.NAME_1);
-    dis.transition().style('opacity', 1);
-    dis.html(d.properties.NAME_2);
-    num.transition().style('opacity', 1);
-    num.html(soruces);
+    setHoveredDistrict(d.properties.NAME_2);
+    const originalColor = d3.select(this).attr('Ocolor');
     d3.selectAll('.district').attr('fill', d => coloriz(d, 'dim'));
-    d3.select(this).attr('fill', Ocolor);
+    d3.select(this).attr('fill', originalColor);
     d3.select(this).style('stroke-width', 1.5);
   }
 
   function mouseout() {
     d3.selectAll('.district').attr('fill', d => coloriz(d, 'original'));
-    gov.transition().duration(200).style('opacity', 0);
-    dis.transition().duration(200).style('opacity', 0);
-    num.transition().duration(200).style('opacity', 0);
     d3.select(this).style('stroke-width', 0.3);
   }
 
@@ -97,11 +86,6 @@ const SVGMap = ({setHoveredDistrict}) => {
     const features =  svg.append('g')
           .attr('transform', 'translate(-200,70)');
 
-    // const gov = d3.select('#gov');
-    // const dis = d3.select('#dis');
-    // const num = d3.select('#num');
-    // const els = document.getElementById('viz');
-
     features.selectAll('path')
       .data(topojson.feature(Districts, Districts.objects.SYR_adm2).features)
       .enter()
@@ -113,11 +97,9 @@ const SVGMap = ({setHoveredDistrict}) => {
       .attr('district', d => d.properties.NAME_2)
       .attr('stroke', '#404040')
       .attr('stroke-width', 0.3)
-      .on('mouseover', d => setHoveredDistrict(d.properties.NAME_2));
+      .on('mouseover', mouseover)
+      .on('mouseout', mouseout);
   }
-
-
-
   
   return (
     <svg ref={svgEl}></svg>
