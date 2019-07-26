@@ -2,8 +2,8 @@ import React, { useRef, useEffect } from 'react';
 //import { useStaticQuery, graphql } from "gatsby";
 import * as d3 from 'd3';
 import * as topojson from 'topojson';
-import Districts from '../../data/syriaDistricts';
-import Sources from '../../data/sySources';
+import Districts from '../../../data/syriaDistricts';
+import Sources from '../../../data/sySources';
 
 const SVGMap = ({setHoveredDistrict}) => {
   
