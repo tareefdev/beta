@@ -7,7 +7,7 @@ import LocalizedLink from '../components/localizedLink';
 import { LocaleContext } from '../context/locale-context';
 import useTranslations from '../components/useTranslations';
 
-import SVGMap from '../components/sy-map';
+import SVGMap from '../components/charts/sy-map';
 
 const Index = ({ data }) => {
   const [hoveredDistrict, setHoveredDistrict] = useState({
