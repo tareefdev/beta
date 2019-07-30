@@ -63,7 +63,8 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 };
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;  
+  const { createPage, createRedirect } = actions;
+  createRedirect({ fromPath: '/en', toPath: '/', isPermanent: true });
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
   const unitTemplate = path.resolve(`src/templates/unit-page.js`);
   const unitListTemplate = path.resolve(`src/templates/units-list.js`);
