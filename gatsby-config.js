@@ -37,6 +37,7 @@ module.exports = {
       },
     },
     `gatsby-transformer-json`,
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-mdx`,
       options: {
