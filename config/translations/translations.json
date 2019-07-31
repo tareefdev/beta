@@ -1,5 +1,7 @@
 {
   "ar": {
+    "not found": "الصفحة غير موجودة",
+    "you just hit a route that doesn&#39;t exist.": "الصفحة التي تبحث عنها غير موجودة",
     "tech advocacy": "المناصرة التقنية",
     "incidents": "أنواع الحوادث",
     "all observations": "كافة الوثائق البصرية",
