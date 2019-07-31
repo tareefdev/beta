@@ -7,7 +7,7 @@ function unitTemplate({pageContext, data, location}) {
 
     // here you can use this.props.pageContext.locale
   const locale = pageContext.locale;
-    let isModal = false;
+    let isModal = true; // should be false
     // We don't want to show the modal if a user navigates
     // directly to a post so if this code is running on Gatsby's
     // initial render then we don't show the modal, otherwise we
@@ -19,7 +19,7 @@ function unitTemplate({pageContext, data, location}) {
       isModal = true;
     }
     return (
-      <DataBaseLayout location={location} isModal={isModal}>
+      <DataBaseLayout location={location} isModal={isModal} prevPath={location.state.prevPath}>
         <UnitDetails unit={data.unitsJson} locale={locale} />
       </DataBaseLayout>
     );

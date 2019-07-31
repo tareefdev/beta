@@ -35,8 +35,8 @@ class DataBaseLayout extends React.Component {
     if (isModal && Modal) {
       return (
         <React.Fragment>
-          <PageRenderer location={{ pathname: `/` }} />
-          <Modal isOpen={true} location={location}>
+          <PageRenderer location={{ pathname: this.props.prevPath }} />
+          <Modal isOpen={true} location={location} prevPath={this.props.prevPath}>
             {this.props.children}
           </Modal>
         </React.Fragment>
@@ -66,7 +66,7 @@ class DataBaseLayout extends React.Component {
             }}
           >
             <Link
-              to="/"
+              to={ this.props.prevPath }
               css={{
                 display: `inline-block`,
                 float: `left`,

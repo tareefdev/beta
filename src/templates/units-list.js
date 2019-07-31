@@ -5,7 +5,7 @@ import { LocaleContext } from '../context/locale-context';
 import LocalizedLink from "../components/localizedLink";
 import useTranslations from '../components/useTranslations';
 
-const UnitsList = ({data, pageContext}) => {
+const UnitsList = ({data, pageContext, location}) => {
   const [Units, setUnits] = useState('');
 
   // Similar to componentDidMount, componentDidUpdate:
@@ -38,7 +38,7 @@ const UnitsList = ({data, pageContext}) => {
   const pageNavigation = pageRange.filter(page => (page > -1 && page < totalPages));
 
   
-   const listUnits = units.map((unit) =>
+  const listUnits = units.map((unit) =>
                               <div
                                 key={unit["id"]}
                                 className="unit"
@@ -46,10 +46,15 @@ const UnitsList = ({data, pageContext}) => {
                                 <span>{unit["reference_code"]}</span>
                                 <span>{unit["incident_date_time"]}</span>
                                 <p>{unit["title"]}</p>
-                                <LocalizedLink to={`/database/units/${unit.id}`}>{tr('View')}</LocalizedLink>
+                                <LocalizedLink to={`/database/units/${unit.id}`}
+                                               state={{
+                                                 prevPath : location.pathname
+                                               }}>
+                                  {tr('View')}
+                                </LocalizedLink>
                               </div>
-                           );
- 
+                             );
+  
   
   return(
     <div className="database-page">

@@ -97,7 +97,7 @@ class GatsbyGramModal extends React.Component {
           return (
             <Modal
               isOpen={this.props.isOpen}
-              onRequestClose={() => push(`/`)}
+              onRequestClose={() => push(this.props.prevPath)}
               style={{
                 overlay: {
                   position: `fixed`,
@@ -123,7 +123,7 @@ class GatsbyGramModal extends React.Component {
               contentLabel="Modal"
             >
               <div
-                onClick={() => push(`/`)}
+                onClick={() => push(this.props.prevPath)} 
                 css={{
                   display: `flex`,
                   position: `relative`,
@@ -164,7 +164,7 @@ class GatsbyGramModal extends React.Component {
                 </div>
                 <MdClose
                   data-testid="modal-close"
-                  onClick={() => push(`/`)}
+                  onClick={() => push(this.props.prevPath)}
                   css={{
                     cursor: `pointer`,
                     color: `rgba(255,255,255,0.8)`,
