@@ -3,6 +3,7 @@ import { Link, graphql } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 
 import Layout from "../components/layout";
+import MdxLink from "../components/mdxLink";
 import SEO from "../components/seo";
 import ChildList from "../components/childList";
 import { rhythm, scale } from "../utils/typography";
@@ -38,7 +39,10 @@ const BlogPostTemplate = ({ data }) => {
         >
           {post.frontmatter.date}
         </p>
-        <MDXRenderer>
+      <MDXRenderer
+        components={{
+          a: MdxLink
+        }}>
           { post.code.body} 
         </MDXRenderer>
         <hr
