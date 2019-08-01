@@ -5,9 +5,10 @@ import DataBaseLayout from "../layout/databaseLayout";
 
 function unitTemplate({pageContext, data, location}) {
 
-    // here you can use this.props.pageContext.locale
+    // here you can use location.state.pageContext.locale
   const locale = pageContext.locale;
-    let isModal = true; // should be false
+  const prevPath = location.state? location.state.prevPath : '/';
+  let isModal = false; // should be false
     // We don't want to show the modal if a user navigates
     // directly to a post so if this code is running on Gatsby's
     // initial render then we don't show the modal, otherwise we
@@ -18,8 +19,9 @@ function unitTemplate({pageContext, data, location}) {
     ) {
       isModal = true;
     }
+
     return (
-      <DataBaseLayout location={location} isModal={isModal} prevPath={location.state.prevPath}>
+      <DataBaseLayout location={location} isModal={isModal} prevPath={prevPath}>
         <UnitDetails unit={data.unitsJson} locale={locale} />
       </DataBaseLayout>
     );
