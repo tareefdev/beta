@@ -2,27 +2,22 @@ import React, { Component } from 'react';
 import d3 from '../../utils/d3Importer';
 import {filter, includes, groupBy, find} from 'lodash';
 import moment from 'moment';
-import axios from 'axios';
+import Incidents from '../../../data/oldIncidents';
 
 class Timeline extends Component {
   constructor(props){
     super(props);
     this.drawChart = this.drawChart.bind(this);
-    this.units = [];
     this.data = [];
   }
   
   componentDidMount() {
-    axios.get('https://api.syrianarchive.org/incidents/')
-      .then(response => {
-        this.units = [...response.data.units];
         this.drawChart();
-      });
   }
 
   drawChart () {
     const node = this.node;
-    let units = this.units;
+    let units = Incidents.units;
     let data = this.data;
     const collectionName = this.props.collectionName;
     const lang = this.props.lang || 'en';
