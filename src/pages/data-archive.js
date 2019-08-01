@@ -50,7 +50,6 @@ export const pageQuery = graphql`
       node {
         id
         incident_date_time
-        link
         title
         location {
           name

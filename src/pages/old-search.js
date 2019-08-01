@@ -19,7 +19,9 @@ const Search = ({data}) => {
     doc: {
       id: "id",
       field: [
-        `title`
+        `title`,
+        `location.name`,
+        `incident_date_time`
       ]
     }
   });
@@ -117,9 +119,15 @@ export const pageQuery = graphql`
   query SearchDatabase {
   allUnitsJson(filter: {lang: {eq: "ar"}}) {
     edges {
-      node {
+     node {
         id
+        incident_date_time
         title
+        location {
+          name
+          lat
+          lon
+        }
       }
     }
   }
