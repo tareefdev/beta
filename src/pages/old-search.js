@@ -121,13 +121,7 @@ export const pageQuery = graphql`
     edges {
      node {
         id
-        incident_date_time
         title
-        location {
-          name
-          lat
-          lon
-        }
       }
     }
   }
