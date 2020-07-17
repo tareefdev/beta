@@ -46,7 +46,7 @@
     "gatsby-transformer-remark": "^2.3.12",
     "gatsby-transformer-sharp": "^2.1.21",
     "leaflet": "^1.5.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "prismjs": "^1.16.0",
